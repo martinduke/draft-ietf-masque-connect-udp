@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-11-12T00:39:42.396152+00:00",
+  "timestamp": "2020-11-15T00:42:59.940428+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -444,7 +444,7 @@
       "labels": [],
       "body": "This is a placeholder to discuss the effects/mitigations for nested congestion control, as required in the charter.",
       "createdAt": "2020-10-09T21:13:57Z",
-      "updatedAt": "2020-11-11T17:12:05Z",
+      "updatedAt": "2020-11-12T10:52:18Z",
       "closedAt": null,
       "comments": [
         {
@@ -474,6 +474,13 @@
           "body": "The problem isn't that the masque proxy might drop packets; that's fine as that a congestion signal as any other signal from a router, as David said; usually this is called AQM and not congestion control though. The problem is that there are two actual congestion controllers which react to the same input signal (loss) and try to control the same output signal (rate) but operating on different time scales. In TCP the outer connection would conceal losses but add delay; so the inner connection you not get the input signal but see changes in delay that can negatively interact with the control loop as that's not the expected scenario. In QUIC when datagrams are use the losses are not concealed and both controllers react to the same input signal. However, if the outer tunnel QUIC connection between the client and the proxy is working on a much smaller time scale, it actually faster and it should be the limiting factor. Still, I think more work is needed here and also some text to acknowledge this in the draft.",
           "createdAt": "2020-11-11T17:12:05Z",
           "updatedAt": "2020-11-11T17:12:05Z"
+        },
+        {
+          "author": "ihlar",
+          "authorAssociation": "NONE",
+          "body": "I would say that Davids point is valid for 3GPP radio, where an e/gNB buffers data and regulates the transmission rate based on a multitude of factors. In the case of RLC Acknowledged mode there is also nested loss recovery, though in this case losses are concealed similarly to what Mirja describes for the TCP case.\r\n\r\nI agree that some discussion on this topic is warranted, but I would be wary against making too clear recommendations such as ''drop packets when CWND limited\". ",
+          "createdAt": "2020-11-12T10:52:18Z",
+          "updatedAt": "2020-11-12T10:52:18Z"
         }
       ]
     },
