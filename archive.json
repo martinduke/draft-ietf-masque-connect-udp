@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-11-15T00:42:59.940428+00:00",
+  "timestamp": "2020-11-22T00:46:29.773092+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -328,7 +328,7 @@
       "labels": [],
       "body": "Issue created by me on [2020-08-13](https://github.com/DavidSchinazi/masque-drafts/issues/29):\r\n\r\n[connect-udp-00 s3](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-3) mainly copied most of the CONNECT-UDP design from CONNECT, but than goes against some existing HTTP semantics. In particular, every HTTP method is supposed to use URIs to represent their request target (this was mentioned in [RFC 7231 s2](https://tools.ietf.org/html/rfc7231#section-2) and clarified in [draft-ietf-httpbis-semantics s6.1](https://tools.ietf.org/html/draft-ietf-httpbis-semantics-10#section-6.1)). CONNECT and OPTIONS are noted as existing exceptions, but new methods are not allowed exceptions, to allow intermediaries to proxy unknown methods. CONNECT-UDP only cares about the authority (host and port) portion of the URI, so we can easily encode that as an URI and mandate that the path MUST be \"/\" and the query MUST be empty. The main open question is what scheme to use. We could either reuse https, or register a new one.",
       "createdAt": "2020-08-28T04:16:15Z",
-      "updatedAt": "2020-08-28T04:17:13Z",
+      "updatedAt": "2020-11-20T10:01:55Z",
       "closedAt": null,
       "comments": [
         {
@@ -344,6 +344,20 @@
           "body": "Comment by @MikeBishop on 2020-08-14:\r\n\r\n`udp://target-host:port`?",
           "createdAt": "2020-08-28T04:17:13Z",
           "updatedAt": "2020-08-28T04:17:13Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "NONE",
+          "body": "From IETF 109: Strong support in the room to go with:\r\n\r\n```\r\nmasque://target-host:port\r\n```",
+          "createdAt": "2020-11-20T10:01:47Z",
+          "updatedAt": "2020-11-20T10:01:47Z"
+        },
+        {
+          "author": "ekr",
+          "authorAssociation": "NONE",
+          "body": "I'm actually less sure about masque://. It seems naively like this URI would refer to \"do masque with this proxy\"",
+          "createdAt": "2020-11-20T10:01:55Z",
+          "updatedAt": "2020-11-20T10:01:55Z"
         }
       ]
     },
@@ -352,15 +366,15 @@
       "id": "MDU6SXNzdWU3MTc0OTQ2Nzc=",
       "title": "Just curious about \"0-length\" datagrams",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/9",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I just opened an issue on HTTP/3 datagram: https://github.com/DavidSchinazi/draft-h3-datagram/issues/8. There I suggest that receiving an H3 DATAGRAM frame with 0-length payload is an H3_FRAME_ERROR. \r\n\r\nBut after the flow ID \"is taken off\" the usable payload could be 0. I just wanted to check that a MASQUE proxy is fine to send 0-length UDP datagrams back and forth to an origin. That seems to be as-designed.",
       "createdAt": "2020-10-08T16:31:22Z",
-      "updatedAt": "2020-10-08T17:14:24Z",
-      "closedAt": null,
+      "updatedAt": "2020-11-19T03:43:31Z",
+      "closedAt": "2020-11-19T03:43:31Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -375,6 +389,13 @@
           "body": "Yeah, there's a resolved issue on DATAGRAM where we explicitly wanted to allow this type of model, so I support keeping that.",
           "createdAt": "2020-10-08T17:14:24Z",
           "updatedAt": "2020-10-08T17:14:24Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing based on discussion, no action needed here.",
+          "createdAt": "2020-11-19T03:43:31Z",
+          "updatedAt": "2020-11-19T03:43:31Z"
         }
       ]
     },
@@ -687,6 +708,30 @@
           "body": "Oh, thanks for the clarification. ",
           "createdAt": "2020-11-11T22:30:23Z",
           "updatedAt": "2020-11-11T22:30:23Z"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "MDU6SXNzdWU3NDY5MjE2NDk=",
+      "title": "ICMP handling on the proxy",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/20",
+      "state": "OPEN",
+      "author": "obonaventure",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "With the CONNECT UDP, a proxy will send and receive UDP datagrams on behalf of a client. However, in addition to these UDP datagrams, it could also receive ICMP messages. The current draft does not discuss how these ICMP messages should be handled by a proxy and how they would need to be conveyed to the client. It probably makes sense to at least discuss how ICMP destination/network/port unreachable should be handled by the proxy (ignore, terminate the HTTP connection, ...)",
+      "createdAt": "2020-11-19T21:01:55Z",
+      "updatedAt": "2020-11-19T21:55:10Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I agree. I'm not yet sure what the best solution is (closing the stream on port unreachable would improve reliability but does introduce a way for an attacker to deny service) but we should figure that out and provide guidance in the doc.",
+          "createdAt": "2020-11-19T21:55:10Z",
+          "updatedAt": "2020-11-19T21:55:10Z"
         }
       ]
     }
