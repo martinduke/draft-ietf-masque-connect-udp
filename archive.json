@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-11-22T00:46:29.773092+00:00",
+  "timestamp": "2020-11-24T00:45:11.800996+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -328,7 +328,7 @@
       "labels": [],
       "body": "Issue created by me on [2020-08-13](https://github.com/DavidSchinazi/masque-drafts/issues/29):\r\n\r\n[connect-udp-00 s3](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-3) mainly copied most of the CONNECT-UDP design from CONNECT, but than goes against some existing HTTP semantics. In particular, every HTTP method is supposed to use URIs to represent their request target (this was mentioned in [RFC 7231 s2](https://tools.ietf.org/html/rfc7231#section-2) and clarified in [draft-ietf-httpbis-semantics s6.1](https://tools.ietf.org/html/draft-ietf-httpbis-semantics-10#section-6.1)). CONNECT and OPTIONS are noted as existing exceptions, but new methods are not allowed exceptions, to allow intermediaries to proxy unknown methods. CONNECT-UDP only cares about the authority (host and port) portion of the URI, so we can easily encode that as an URI and mandate that the path MUST be \"/\" and the query MUST be empty. The main open question is what scheme to use. We could either reuse https, or register a new one.",
       "createdAt": "2020-08-28T04:16:15Z",
-      "updatedAt": "2020-11-20T10:01:55Z",
+      "updatedAt": "2020-11-22T19:00:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -358,6 +358,13 @@
           "body": "I'm actually less sure about masque://. It seems naively like this URI would refer to \"do masque with this proxy\"",
           "createdAt": "2020-11-20T10:01:55Z",
           "updatedAt": "2020-11-20T10:01:55Z"
+        },
+        {
+          "author": "tfpauly",
+          "authorAssociation": "NONE",
+          "body": "Agreed with @ekr. While `udp://` probably isn't right, `masque://` seems misleading.",
+          "createdAt": "2020-11-22T19:00:57Z",
+          "updatedAt": "2020-11-22T19:00:57Z"
         }
       ]
     },
@@ -671,7 +678,7 @@
       "labels": [],
       "body": "There are several things in the IP layer that a normal application running over a UDP socket can control: ECN, DSCP, etc. Magnus's draft is a comprehensive list, but these are the two with the strongest case (ECN being particularly compelling, IMO).\r\n\r\nAs an individual, I would be sad if there was no way to use ECN for MASQUE except to do IP proxying. As an AD, I think this functionality would absolutely be in scope if we could form a consensus around it.\r\n\r\nI don't have a problem with support for this being optional, or even in a separate CONNECT-UDP extension draft, but I'm putting in issue here to preserve the discussion item. If the outcome is that someone needs to write an extension draft, I'm fine with that.",
       "createdAt": "2020-11-10T18:09:40Z",
-      "updatedAt": "2020-11-11T22:30:23Z",
+      "updatedAt": "2020-11-23T12:07:45Z",
       "closedAt": null,
       "comments": [
         {
@@ -708,6 +715,20 @@
           "body": "Oh, thanks for the clarification. ",
           "createdAt": "2020-11-11T22:30:23Z",
           "updatedAt": "2020-11-11T22:30:23Z"
+        },
+        {
+          "author": "ekr",
+          "authorAssociation": "NONE",
+          "body": "FWIW, I agree with @DavidSchinazi about this not going into the main draft.",
+          "createdAt": "2020-11-22T22:33:36Z",
+          "updatedAt": "2020-11-22T22:33:36Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "Even if this will be defined as an extension, we need to make sure we have the right extension point ready, e.g. for per-packet feedback. Also I think this is one of the base functions we should really support. I think we need more discussion based on a concrete proposal. Will try to work on this.",
+          "createdAt": "2020-11-23T12:07:45Z",
+          "updatedAt": "2020-11-23T12:07:45Z"
         }
       ]
     },
@@ -723,7 +744,7 @@
       "labels": [],
       "body": "With the CONNECT UDP, a proxy will send and receive UDP datagrams on behalf of a client. However, in addition to these UDP datagrams, it could also receive ICMP messages. The current draft does not discuss how these ICMP messages should be handled by a proxy and how they would need to be conveyed to the client. It probably makes sense to at least discuss how ICMP destination/network/port unreachable should be handled by the proxy (ignore, terminate the HTTP connection, ...)",
       "createdAt": "2020-11-19T21:01:55Z",
-      "updatedAt": "2020-11-19T21:55:10Z",
+      "updatedAt": "2020-11-23T10:07:32Z",
       "closedAt": null,
       "comments": [
         {
@@ -732,6 +753,20 @@
           "body": "I agree. I'm not yet sure what the best solution is (closing the stream on port unreachable would improve reliability but does introduce a way for an attacker to deny service) but we should figure that out and provide guidance in the doc.",
           "createdAt": "2020-11-19T21:55:10Z",
           "updatedAt": "2020-11-19T21:55:10Z"
+        },
+        {
+          "author": "ekr",
+          "authorAssociation": "NONE",
+          "body": "FWIW, the way TURN handles this is by having a way for the server to forward ICMP indications. \r\nhttps://www.rfc-editor.org/rfc/rfc8656.html#name-receiving-an-icmp-packet\r\n\r\nObviously, in order to have this in MASQUE we would need to have some sort of type indicator in the datagram.",
+          "createdAt": "2020-11-22T22:32:47Z",
+          "updatedAt": "2020-11-22T22:32:47Z"
+        },
+        {
+          "author": "gloinul",
+          "authorAssociation": "NONE",
+          "body": "I do want the relevant information in the ICMP to make it to the client. However, ICMP falls into the asynchronous information that is not directly associated with a forwarded packet. It can clearly be a forwarded packet per EKR's suggestion. We have other cases where we have information that is related to the associated packet, for example ECN. So I think this there is an important high level design choice here that we need to sorted out. I think for the general extensibility lets consider a content identifier so that just UDP payloads can be separated from additional types with additional fields. ",
+          "createdAt": "2020-11-23T10:07:32Z",
+          "updatedAt": "2020-11-23T10:07:32Z"
         }
       ]
     }
