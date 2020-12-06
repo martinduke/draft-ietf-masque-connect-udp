@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-11-24T00:45:11.800996+00:00",
+  "timestamp": "2020-12-06T00:54:06.038755+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -769,6 +769,22 @@
           "updatedAt": "2020-11-23T10:07:32Z"
         }
       ]
+    },
+    {
+      "number": 21,
+      "id": "MDU6SXNzdWU3NTcyMTYzODE=",
+      "title": "Handling of odd-numbered \"datagram-flow-id\"  ",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/21",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "When processing a CONENCT-UDP request a server might apply some checks to decide if the request is valid. First, does the request contain a \"datagram-flow-id\", second is the value a valid sh-integer, and third is the value a valid client-initiated flow ID (even numbered).\r\n\r\nThe spec doesn't really talk about that third condition. And there is an interesting interplay with https://tools.ietf.org/html/draft-schinazi-quic-h3-datagram-05, which states requirements on flow ID allocation but clearly highlights that DATAGRAMs can be sent with even or odd flow IDs by either endpoint.\r\n\r\nWhile we continue to use flow ID with CONNECT-UDP, I think it might help to add some text about what a server should do.",
+      "createdAt": "2020-12-04T16:07:40Z",
+      "updatedAt": "2020-12-04T16:07:40Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
