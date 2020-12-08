@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-06T00:54:06.038755+00:00",
+  "timestamp": "2020-12-08T00:52:24.242478+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -783,6 +783,22 @@
       "body": "When processing a CONENCT-UDP request a server might apply some checks to decide if the request is valid. First, does the request contain a \"datagram-flow-id\", second is the value a valid sh-integer, and third is the value a valid client-initiated flow ID (even numbered).\r\n\r\nThe spec doesn't really talk about that third condition. And there is an interesting interplay with https://tools.ietf.org/html/draft-schinazi-quic-h3-datagram-05, which states requirements on flow ID allocation but clearly highlights that DATAGRAMs can be sent with even or odd flow IDs by either endpoint.\r\n\r\nWhile we continue to use flow ID with CONNECT-UDP, I think it might help to add some text about what a server should do.",
       "createdAt": "2020-12-04T16:07:40Z",
       "updatedAt": "2020-12-04T16:07:40Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 22,
+      "id": "MDU6SXNzdWU3NTg2Mzc3MTg=",
+      "title": "Handling of \"in-use\" flow IDs",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/22",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Slightly related to #21 but image the following scenario that uses syntactically valid flow IDs\r\n\r\nFirst\r\n```\r\n:method: CONNECT-UDP\r\n:path: example.com:443\r\n:authority: example.com:443\r\ndatagram-flow-id: 0\r\n\r\nstatus: 200\r\n\r\n<datagram exchanges>\r\n```\r\n\r\nSecond\r\n```\r\n:method: CONNECT-UDP\r\n:path: other.example.com:443\r\n:authority: other.example.com:443\r\ndatagram-flow-id: 0\r\n\r\nstatus: ???\r\n```\r\n\r\nThe second request should probably be rejected with a 4xx error. The spec alludes to that possibility (apart from the weird bit about \"governed by\":\r\n\r\n> Any response other than a successful response indicates that the tunnel has not yet been formed and that the connection remains governed by HTTP.\r\n\r\nI think it might help to call this error condition out more explicitly.\r\n",
+      "createdAt": "2020-12-07T16:02:17Z",
+      "updatedAt": "2020-12-07T16:02:17Z",
       "closedAt": null,
       "comments": []
     }
