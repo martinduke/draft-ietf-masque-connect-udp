@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-08T00:52:24.242478+00:00",
+  "timestamp": "2020-12-15T00:54:29.030387+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -47,6 +47,11 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "extension",
+      "description": "This could done by an extension",
+      "color": "0052cc"
     }
   ],
   "issues": [
@@ -55,15 +60,15 @@
       "id": "MDU6SXNzdWU2ODc2OTQ1NTE=",
       "title": "CONNECT-UDP and multiple intermediaries",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/1",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Issue reported by @martinthomson on [2020-04-16](https://github.com/DavidSchinazi/masque-drafts/issues/21#issue-601716642)\r\n\r\n> Note that when multiple proxies are involved in a CONNECT-UDP request, all the HTTP connections along the path need to be using HTTP/3 [H3] or later in order for UDP payloads to be sent over QUIC DATAGRAM frames.\r\n\r\nHow is this true? The first proxy should convert the stream of encapsulated UDP datagrams into actual UDP datagrams. That means that the second proxy won't see these as part of the connection.\r\n\r\nThis is only an issue if the proxy wants to pass the DATAGRAM frames on to the next proxy. But that's not what is being asked of it, if it does that, it does so on its own recognizance. (I should add: if it chooses to forward to a next hop that uses h2, then it can take the DATAGRAM frames and stuff them into the request stream.)",
       "createdAt": "2020-08-28T04:03:10Z",
-      "updatedAt": "2020-08-28T04:04:13Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:07Z",
+      "closedAt": "2020-12-13T04:42:07Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -78,6 +83,13 @@
           "body": "Reply by @martinthomson on 2020-04-19:\r\n\r\nI'm not really clear on how you think that might work. If Client and Proxy A negotiate the use of DATAGRAM, does this depend on Proxy A verifying first that Proxy B also supports DATAGRAM? How do you ensure that the identifiers are comprehensible to all parties?",
           "createdAt": "2020-08-28T04:04:13Z",
           "updatedAt": "2020-08-28T04:04:13Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:07Z",
+          "updatedAt": "2020-12-13T04:42:07Z"
         }
       ]
     },
@@ -86,15 +98,15 @@
       "id": "MDU6SXNzdWU2ODc2OTUzMjM=",
       "title": "CONNECT-UDP request body",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Issue reported by @martinthomson on [2020-04-16](https://github.com/DavidSchinazi/masque-drafts/issues/22):\r\n\r\n>    A payload within a CONNECT-UDP request message has no defined semantics; a CONNECT-UDP request with a non-empty payload is malformed.\r\n\r\nI think that this text is out of sync with the rest of the doc.  The payload is used to carry UDP packets, even when you use DATAGRAM frames.",
       "createdAt": "2020-08-28T04:05:37Z",
-      "updatedAt": "2020-08-28T04:06:03Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:09Z",
+      "closedAt": "2020-12-13T04:42:08Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -102,6 +114,13 @@
           "body": "Reply from me on 2020-04-17:\r\n\r\nI think this is just a question of semantics. CONNECT takes over the stream, and therefore the contents of that stream are not considered to be the payload of the HTTP response.\r\n\r\nFrom [RFC 7231 s4.3.6](https://tools.ietf.org/html/rfc7231#section-4.3.6):\r\n>   A payload within a CONNECT request message has no defined semantics;\r\n>   sending a payload body on a CONNECT request might cause some existing\r\n>   implementations to reject the request.",
           "createdAt": "2020-08-28T04:06:03Z",
           "updatedAt": "2020-08-28T04:06:03Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:08Z",
+          "updatedAt": "2020-12-13T04:42:08Z"
         }
       ]
     },
@@ -110,15 +129,15 @@
       "id": "MDU6SXNzdWU2ODc2OTU5NzU=",
       "title": "Datagram-Flow-Id is hop-by-hop",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Issue reported by @martinthomson on [2020-04-16](https://github.com/DavidSchinazi/masque-drafts/issues/23):\r\n\r\nThat is *probably* OK for something with CONNECT-like semantics, but we did explicitly choose to disable hop-by-hop fields in HTTP/2.",
       "createdAt": "2020-08-28T04:07:34Z",
-      "updatedAt": "2020-08-28T04:08:43Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:10Z",
+      "closedAt": "2020-12-13T04:42:10Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -147,6 +166,13 @@
           "body": "Comment from me on 2020-07-24:\r\n\r\nSorry, I should have said 501 \"Not Implemented\", not 405.",
           "createdAt": "2020-08-28T04:08:43Z",
           "updatedAt": "2020-08-28T04:08:43Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:10Z",
+          "updatedAt": "2020-12-13T04:42:10Z"
         }
       ]
     },
@@ -155,15 +181,15 @@
       "id": "MDU6SXNzdWU2ODc2OTY3OTg=",
       "title": "Flow duration",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/4",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Issue created by @martinthomson on [2020-04-16](https://github.com/DavidSchinazi/masque-drafts/issues/24):\r\n\r\nThe CONNECT-UDP proxy has to act a little like a NAT when it forwards UDP. It has to assign a source IP and port. Those probably need to be dedicated to the flow for its lifetime. However, UDP lacks the clear signals of TCP about connection termination, so we need a clear definition of what lifetime is.\r\n\r\nIt is perhaps reasonable to tie the lifetime of the allocation to the existence of the stream, but then the connection from the client might drop mid-flow; how long does the proxy need to avoid reusing that address?\r\n\r\nThe proxy might also decide that idleness is cause for dropping bindings. The client needs to know this because it will need to make new tunnels to continue communication if it goes idle for too long.",
       "createdAt": "2020-08-28T04:10:04Z",
-      "updatedAt": "2020-08-28T18:11:57Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:12Z",
+      "closedAt": "2020-12-13T04:42:11Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -185,6 +211,13 @@
           "body": "That's a good idea. I could totally imagine an extension where the proxy tells the client the outgoing port it used in its CONNECT-UDP reply, and then the client is allowed to ask for a preferred port when requesting CONNECT-UDP. This could be achieved via HTTP request/response headers.",
           "createdAt": "2020-08-28T18:11:56Z",
           "updatedAt": "2020-08-28T18:11:56Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:11Z",
+          "updatedAt": "2020-12-13T04:42:11Z"
         }
       ]
     },
@@ -200,7 +233,7 @@
       "labels": [],
       "body": "Issue created by @martinthomson on [2020-04-16](https://github.com/DavidSchinazi/masque-drafts/issues/25):\r\n\r\nThe design here would appear to permit the use of 'Address and Port-Dependent Mapping' as defined in [Section 4.1 of RFC 4787](https://tools.ietf.org/html/rfc4787#section-4.1).  However, that document strongly recommends that an 'Endpoint-Independent Mapping' is used so as to make UNSAF methods work.  This document should define those rules.\r\n\r\nRelated #4.",
       "createdAt": "2020-08-28T04:11:51Z",
-      "updatedAt": "2020-08-28T04:12:07Z",
+      "updatedAt": "2020-12-13T03:52:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -209,6 +242,13 @@
           "body": "Comment from me on 2020-04-17:\r\n\r\nThe current text explicitly only allows \"Address and Port-Dependent Mapping\". It attempted to define those rules clearly in [section 6](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-6). UNSAF is currently considered out of scope and not supported. I'm not sure whether we want to increase the scope and add that complexity.",
           "createdAt": "2020-08-28T04:12:07Z",
           "updatedAt": "2020-08-28T04:12:07Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@martinthomson can you elaborate on what you would like to see happen here? Ideally in the form of a PR?",
+          "createdAt": "2020-12-13T03:52:46Z",
+          "updatedAt": "2020-12-13T03:52:46Z"
         }
       ]
     },
@@ -217,15 +257,15 @@
       "id": "MDU6SXNzdWU2ODc2OTc4OTE=",
       "title": "Datagram-Flow-Id size limits",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Issue created by me on [2020-05-05](https://github.com/DavidSchinazi/masque-drafts/issues/26):\r\n\r\nAs of `connect-udp-00`, the `Datagram-Flow-Id` is [defined](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-5) as a [structured header of type sh-integer](https://tools.ietf.org/html/draft-ietf-httpbis-header-structure-18#section-3.3.1). The max value for those is 10^15-1, but in theory flow IDs can go up to 2^62-1 (~4*10^18). We should either:\r\n- specify an alternate encoding, such as [an sh-binary byte sequence with specified endianness and maximum width](https://lists.w3.org/Archives/Public/ietf-http-wg/2020AprJun/0077.html)\r\n- note that values over 10^15-1 cannot be encoded and reaching that flow identifier should trigger closing the HTTP/3 connection and restarting it",
       "createdAt": "2020-08-28T04:13:18Z",
-      "updatedAt": "2020-08-28T04:13:51Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:14Z",
+      "closedAt": "2020-12-13T04:42:13Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -233,6 +273,13 @@
           "body": "Comment by @LPardue on 2020-05-05:\r\n\r\nI think the lower limit is ok. As a tangent, it might play nice with H2 fallback that uses stream IDs which are restricted to 2^31",
           "createdAt": "2020-08-28T04:13:50Z",
           "updatedAt": "2020-08-28T04:13:50Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:13Z",
+          "updatedAt": "2020-12-13T04:42:13Z"
         }
       ]
     },
@@ -245,10 +292,12 @@
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "extension"
+      ],
       "body": "Issue created by me on [2020-05-27](https://github.com/DavidSchinazi/masque-drafts/issues/27):\r\n\r\nCONNECT-UDP can be used across multiple proxy hops, and each of these hops can have a different MTU, so it could be useful for the client to be notified of the maximum DATAGRAM payload size that will make it across all the hops. This value could also change over time, so we could consider adding the ability to communicate that.",
       "createdAt": "2020-08-28T04:14:55Z",
-      "updatedAt": "2020-11-11T18:50:49Z",
+      "updatedAt": "2020-12-13T03:47:55Z",
       "closedAt": null,
       "comments": [
         {
@@ -321,15 +370,15 @@
       "id": "MDU6SXNzdWU2ODc2OTg4Mjg=",
       "title": "CONNECT-UDP needs a request target URI",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/8",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Issue created by me on [2020-08-13](https://github.com/DavidSchinazi/masque-drafts/issues/29):\r\n\r\n[connect-udp-00 s3](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-3) mainly copied most of the CONNECT-UDP design from CONNECT, but than goes against some existing HTTP semantics. In particular, every HTTP method is supposed to use URIs to represent their request target (this was mentioned in [RFC 7231 s2](https://tools.ietf.org/html/rfc7231#section-2) and clarified in [draft-ietf-httpbis-semantics s6.1](https://tools.ietf.org/html/draft-ietf-httpbis-semantics-10#section-6.1)). CONNECT and OPTIONS are noted as existing exceptions, but new methods are not allowed exceptions, to allow intermediaries to proxy unknown methods. CONNECT-UDP only cares about the authority (host and port) portion of the URI, so we can easily encode that as an URI and mandate that the path MUST be \"/\" and the query MUST be empty. The main open question is what scheme to use. We could either reuse https, or register a new one.",
       "createdAt": "2020-08-28T04:16:15Z",
-      "updatedAt": "2020-11-22T19:00:57Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:15Z",
+      "closedAt": "2020-12-13T04:42:15Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -365,6 +414,13 @@
           "body": "Agreed with @ekr. While `udp://` probably isn't right, `masque://` seems misleading.",
           "createdAt": "2020-11-22T19:00:57Z",
           "updatedAt": "2020-11-22T19:00:57Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:15Z",
+          "updatedAt": "2020-12-13T04:42:15Z"
         }
       ]
     },
@@ -411,15 +467,15 @@
       "id": "MDU6SXNzdWU3MTgzNjM1OTg=",
       "title": "UDP Pacing and Bursting Limits",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/10",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinduke",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Who SHOULD have the responsibility for rate pacing and preventing bursts > ~10 packets? I can imagine a few models:\r\n\r\n- The client paces DATAGRAM frames on the tunneled UDP connection: this would allow QUIC implementations to not change, at least in this respect, when running over MASQUE. It also hopes the outer connection congestion control and/or the proxy logic will not cause these frames/datagrams to bunch up at their egresses.\r\n- The tunneled connection is as bursty as it wants to be, but the outer connection is paced: this has issues with heavy connection multiplexing, and the achievable rate on the outer connection may have no relationship to the rate end-to-end.\r\n- The proxy applies pacing and burst limits at its UDP egress: it's not clear how the proxy would obtain the correct pacing rate without an explicit signal. Of course some UDP apps have no notion of these concepts, so then what?\r\n\r\nAnyway, I'm suspicious that a wild west approach with no advice at all will lead to suboptimal outcomes, though it would not break interop (I wouldn't suggest any MUSTs here). Not saying anything would also preclude any explicit signaling, if that turns out to be beneficial.\r\n\r\nArguably, this is a thing for Magnus's draft, but I suspect that, as with MTU, there is much stronger consensus that pacing is A Necessary Thing than all the IP header fields in that draft. The proxy has no mechanism to flow control datagrams, so some sort of check on egress would be nice to avoid becoming a DoS vector.",
       "createdAt": "2020-10-09T19:07:07Z",
-      "updatedAt": "2020-11-11T17:00:52Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:18Z",
+      "closedAt": "2020-12-13T04:42:17Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -441,6 +497,13 @@
           "body": "Buffering datagrams can be beneficial when the link capacity on the link between the proxy and client is unstable. However, I believe you are talking about not buffering data that is sent towards the server, right?",
           "createdAt": "2020-11-11T17:00:52Z",
           "updatedAt": "2020-11-11T17:00:52Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:17Z",
+          "updatedAt": "2020-12-13T04:42:17Z"
         }
       ]
     },
@@ -449,31 +512,39 @@
       "id": "MDU6SXNzdWU3MTg0MjM4NTU=",
       "title": "Limit Packets before server response",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/11",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinduke",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "@DavidSchinazi in #10 suggested I file this as a separate issue.\r\n\r\nThe anonymization properties of MASQUE make it a nice vector to send out large bursts of datagrams to unsuspecting targets. It would be wise for MASQUE proxies to implement some sort of hard limit on datagrams it's willing to transmit without hearing anything from the server.\r\n\r\nOf course, the client here is working harder than either the proxy or the server, but it would be bad to get the proxy IP on a denylist.",
       "createdAt": "2020-10-09T21:09:02Z",
-      "updatedAt": "2020-10-09T21:09:02Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2020-12-13T04:42:30Z",
+      "closedAt": "2020-12-13T04:42:30Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:30Z",
+          "updatedAt": "2020-12-13T04:42:30Z"
+        }
+      ]
     },
     {
       "number": 12,
       "id": "MDU6SXNzdWU3MTg0MjYxMTY=",
       "title": "Nested Congestion Control",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinduke",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "This is a placeholder to discuss the effects/mitigations for nested congestion control, as required in the charter.",
       "createdAt": "2020-10-09T21:13:57Z",
-      "updatedAt": "2020-11-12T10:52:18Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:19Z",
+      "closedAt": "2020-12-13T04:42:19Z",
       "comments": [
         {
           "author": "martinduke",
@@ -509,6 +580,13 @@
           "body": "I would say that Davids point is valid for 3GPP radio, where an e/gNB buffers data and regulates the transmission rate based on a multitude of factors. In the case of RLC Acknowledged mode there is also nested loss recovery, though in this case losses are concealed similarly to what Mirja describes for the TCP case.\r\n\r\nI agree that some discussion on this topic is warranted, but I would be wary against making too clear recommendations such as ''drop packets when CWND limited\". ",
           "createdAt": "2020-11-12T10:52:18Z",
           "updatedAt": "2020-11-12T10:52:18Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:19Z",
+          "updatedAt": "2020-12-13T04:42:19Z"
         }
       ]
     },
@@ -517,16 +595,24 @@
       "id": "MDU6SXNzdWU3MTg0MjY3MzM=",
       "title": "Nested Loss Recovery",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/13",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinduke",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "This is a placeholder to discuss the effects/mitigations for nested loss recovery, as required in the charter. Of course, this only applies to MASQUE running over HTTP versions with no DATAGRAM frames.",
       "createdAt": "2020-10-09T21:15:17Z",
-      "updatedAt": "2020-10-09T21:15:17Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2020-12-13T04:42:21Z",
+      "closedAt": "2020-12-13T04:42:21Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:21Z",
+          "updatedAt": "2020-12-13T04:42:21Z"
+        }
+      ]
     },
     {
       "number": 14,
@@ -537,10 +623,12 @@
       "author": "martinduke",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "extension"
+      ],
       "body": "If there is an address migration or NAT rebinding on the MASQUE connection, it might be good to have a synthetic event of the same type on any related outgoing UDP flows (i.e. change the MASQUE proxy's server-facing port).\r\n\r\nPros:\r\n- servers can reset their path specific variables, especially MTU.\r\n\r\nCons:\r\n- Would break UDP connections that don't support multihoming (including some QUIC server deployments!) One could argue that exposing this kind of thing to the endpoint actually preserves end-to-end information, I guess.\r\n- The resulting path validation would not otherwise be necessary, as the MASQUE connection already validated it.\r\n\r\nGiven the tradeoffs, perhaps this is a MAY for MASQUE proxies.",
       "createdAt": "2020-10-26T17:41:48Z",
-      "updatedAt": "2020-11-11T23:20:08Z",
+      "updatedAt": "2020-12-13T03:48:10Z",
       "closedAt": null,
       "comments": [
         {
@@ -564,15 +652,15 @@
       "id": "MDU6SXNzdWU3MzY4OTI5ODg=",
       "title": "How do you salami slice CONNECT-UDP stream data?",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/15",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "So I'd kinda forgotten that when H3 DATAGRAMS are not available (e.g. in HTTP/2 etc) CONNECT-UDP allows a mode where UDP datagram payload is transferred to the proxy as one contiguous bytestream of HTTP payload. How do receiving endpoints slice up this bytestream to ensure the atomic payloads are reconstructed properly? A proxy needs to make sure it sends the correct payload in the UDP datagram is will send, a client needs to construct the accurate UDP datagram payload in order to process whatever protocol it is tunnelling.\r\n\r\nThe specification doesn't say anything about how message boundaries might be signalled or acted upon. Is the intention maybe to rely on DATA frames for delineation? Implementations might not be able to guarantee that frames boundaries match 1:1. For instance quiche provides a r[ecv_body() method](https://docs.quic.tech/quiche/h3/struct.Connection.html#method.recv_body) to read arbitrary amounts of payload data from request streams; DATA rame boundaries are not exposed to applications.",
       "createdAt": "2020-11-05T12:29:46Z",
-      "updatedAt": "2020-11-11T17:18:49Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:23Z",
+      "closedAt": "2020-12-13T04:42:23Z",
       "comments": [
         {
           "author": "tfpauly",
@@ -594,6 +682,13 @@
           "body": "I actually thought that would be nice to use DATA frames as this would allow for more extensibility. How hard would it be to expose frame boundary for a masque implementation? Alternatively we could maybe define a new frame type?",
           "createdAt": "2020-11-11T17:18:49Z",
           "updatedAt": "2020-11-11T17:18:49Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:23Z",
+          "updatedAt": "2020-12-13T04:42:23Z"
         }
       ]
     },
@@ -602,15 +697,15 @@
       "id": "MDU6SXNzdWU3MzY4OTUxNTI=",
       "title": "What purpose does datagram-flow-id fulfill?",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/16",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I think it might help to make the purpose of the datagram-flow-id header clearer in the specification.\r\n\r\nFor context, I was giving an overview of HTTP/3 CONNECT-UDP to someone completely new to MASQUE. The inclusion of a flow ID in the H3 DATAGRAM frame makes total sense, it's for multiplexing. However, in my example, the client made a request on stream ID 0 and used a datagram-flow-id of 0. Partly because of this overlap, the person I was presenting to made the comment \"why do you need the datagram-flow-id header, couldn't you just use the stream ID\"? Since the stream and datagram flow IDs have a linked lifetime, this observation makes some sense. \r\n\r\nThere might be benefits to having independence between stream ID and flow ID space. However, having reread the spec a few times now, I think the main purpose comes from the intention to be flexible. What I mean by that is, the use of HTTP/3 DATAGRAMS is opportunistic and that it is reasonable to fallback to carying tunnelled UDP datagram payload on streams. So, is the primary intention that \"datagram-flow-id\" is echoed in responses to allow clients to understand if they can use DATAGRAMS or if they have to use streams? \r\n\r\n",
       "createdAt": "2020-11-05T12:33:03Z",
-      "updatedAt": "2020-11-11T17:47:06Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-13T04:42:25Z",
+      "closedAt": "2020-12-13T04:42:25Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -632,6 +727,13 @@
           "body": "I thought the main reason is that the QUIC stream ID is not exposed to the HTTP layer? However, even if a different stream ID is used on the QUIC layer, you could still use the datagram ID to remember the associated stream on the HTTP layer.",
           "createdAt": "2020-11-11T17:47:06Z",
           "updatedAt": "2020-11-11T17:47:06Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:25Z",
+          "updatedAt": "2020-12-13T04:42:25Z"
         }
       ]
     },
@@ -644,10 +746,12 @@
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "extension"
+      ],
       "body": "Imagine a client wants to talk HTTP to a server via a proxy.\r\n\r\nFor basic HTTP/3, the optimal case is to talk QUIC-in-QUIC via MASQUE and DATAGRAMs. But that requires the proxy (or chain of proxies) to support DATAGRAMs. So a client might discover via the CONNECT-UDP response that only the stream mode is available. \r\n\r\nTransferring QUIC over a reliable stream has some problems. A client might decide its not worth the effort and want to just fallback to HTTP over TLS (via just a CONNECT stream). At such a point, it would likely want to abort the stream and having an error code to indicate this could help the MASQUE server understand that this happened.\r\n\r\nThere's a variant of the above. Since the server can't judge UDP connectivity, it's upon the client to actively close the stream if it detects connectivity issues. An error code to this effect might also help.",
       "createdAt": "2020-11-05T12:50:12Z",
-      "updatedAt": "2020-11-11T19:16:08Z",
+      "updatedAt": "2020-12-13T03:48:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -675,10 +779,12 @@
       "author": "martinduke",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "extension"
+      ],
       "body": "There are several things in the IP layer that a normal application running over a UDP socket can control: ECN, DSCP, etc. Magnus's draft is a comprehensive list, but these are the two with the strongest case (ECN being particularly compelling, IMO).\r\n\r\nAs an individual, I would be sad if there was no way to use ECN for MASQUE except to do IP proxying. As an AD, I think this functionality would absolutely be in scope if we could form a consensus around it.\r\n\r\nI don't have a problem with support for this being optional, or even in a separate CONNECT-UDP extension draft, but I'm putting in issue here to preserve the discussion item. If the outcome is that someone needs to write an extension draft, I'm fine with that.",
       "createdAt": "2020-11-10T18:09:40Z",
-      "updatedAt": "2020-11-23T12:07:45Z",
+      "updatedAt": "2020-12-13T03:54:59Z",
       "closedAt": null,
       "comments": [
         {
@@ -741,10 +847,12 @@
       "author": "obonaventure",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "extension"
+      ],
       "body": "With the CONNECT UDP, a proxy will send and receive UDP datagrams on behalf of a client. However, in addition to these UDP datagrams, it could also receive ICMP messages. The current draft does not discuss how these ICMP messages should be handled by a proxy and how they would need to be conveyed to the client. It probably makes sense to at least discuss how ICMP destination/network/port unreachable should be handled by the proxy (ignore, terminate the HTTP connection, ...)",
       "createdAt": "2020-11-19T21:01:55Z",
-      "updatedAt": "2020-11-23T10:07:32Z",
+      "updatedAt": "2020-12-13T03:55:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -775,32 +883,138 @@
       "id": "MDU6SXNzdWU3NTcyMTYzODE=",
       "title": "Handling of odd-numbered \"datagram-flow-id\"  ",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/21",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "When processing a CONENCT-UDP request a server might apply some checks to decide if the request is valid. First, does the request contain a \"datagram-flow-id\", second is the value a valid sh-integer, and third is the value a valid client-initiated flow ID (even numbered).\r\n\r\nThe spec doesn't really talk about that third condition. And there is an interesting interplay with https://tools.ietf.org/html/draft-schinazi-quic-h3-datagram-05, which states requirements on flow ID allocation but clearly highlights that DATAGRAMs can be sent with even or odd flow IDs by either endpoint.\r\n\r\nWhile we continue to use flow ID with CONNECT-UDP, I think it might help to add some text about what a server should do.",
       "createdAt": "2020-12-04T16:07:40Z",
-      "updatedAt": "2020-12-04T16:07:40Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2020-12-13T04:42:26Z",
+      "closedAt": "2020-12-13T04:42:26Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:26Z",
+          "updatedAt": "2020-12-13T04:42:26Z"
+        }
+      ]
     },
     {
       "number": 22,
       "id": "MDU6SXNzdWU3NTg2Mzc3MTg=",
       "title": "Handling of \"in-use\" flow IDs",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/22",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Slightly related to #21 but image the following scenario that uses syntactically valid flow IDs\r\n\r\nFirst\r\n```\r\n:method: CONNECT-UDP\r\n:path: example.com:443\r\n:authority: example.com:443\r\ndatagram-flow-id: 0\r\n\r\nstatus: 200\r\n\r\n<datagram exchanges>\r\n```\r\n\r\nSecond\r\n```\r\n:method: CONNECT-UDP\r\n:path: other.example.com:443\r\n:authority: other.example.com:443\r\ndatagram-flow-id: 0\r\n\r\nstatus: ???\r\n```\r\n\r\nThe second request should probably be rejected with a 4xx error. The spec alludes to that possibility (apart from the weird bit about \"governed by\":\r\n\r\n> Any response other than a successful response indicates that the tunnel has not yet been formed and that the connection remains governed by HTTP.\r\n\r\nI think it might help to call this error condition out more explicitly.\r\n",
       "createdAt": "2020-12-07T16:02:17Z",
-      "updatedAt": "2020-12-07T16:02:17Z",
+      "updatedAt": "2020-12-13T04:42:28Z",
+      "closedAt": "2020-12-13T04:42:28Z",
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This should be fixed in today's update to the drafts.",
+          "createdAt": "2020-12-13T04:42:28Z",
+          "updatedAt": "2020-12-13T04:42:28Z"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "MDU6SXNzdWU3NjU3Mjc1OTM=",
+      "title": ":scheme",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/23",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "[RFC 7540](https://tools.ietf.org/html/rfc7540#section-8.3) requires that CONNECT requests omit the `:scheme` pseudo-header:\r\n\r\n>   The \":scheme\" and \":path\" pseudo-header fields MUST be omitted.\r\n\r\nWhy does this draft need to define a URI scheme and then include that in `:scheme`?\r\n\r\nThere are already two different definitions for `udp:` URI scheme.  Both seem - at least on face value - fairly sensible, but they both come with considerable baggage.\r\n\r\nThe question I'd like to ask is whether this protocol even needs a URI scheme at all.  My first inclination is very much that it does not.",
+      "createdAt": "2020-12-14T00:34:36Z",
+      "updatedAt": "2020-12-15T00:07:55Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I added the scheme because I thought it was required (and [folks in the room at IETF 109 seemed to think it was required too](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/8#issuecomment-731071289)), but maybe it isn't.\r\n\r\nUnfortunately, CONNECT-UDP is distinct from CONNECT, so it cannot benefit from the exception that CONNECT has. This is pretty explicit in [draft-ietf-httpbis-semantics s6.1](https://tools.ietf.org/html/draft-ietf-httpbis-semantics-10#section-6.1):\r\n> the request target is a URI reference\r\n> For CONNECT, the request target is the host name and port number\r\n> These forms MUST NOT be used with other methods.\r\n\r\nThis means that, unlike CONNECT, CONNECT-UDP needs a URI reference.\r\n\r\nHowever, according to [RFC 3986](https://tools.ietf.org/html/rfc3986):\r\n\r\n> URI-reference = URI / relative-ref\r\n> URI = scheme \":\" hier-part [ \"?\" query ] [ \"#\" fragment ]\r\n> relative-ref  = relative-part [ \"?\" query ] [ \"#\" fragment ]\r\n> relative-part = \"//\" authority path-abempty / path-absolute / path-noscheme / path-empty\r\n> path-abempty  = *( \"/\" segment )\r\n> authority = [ userinfo \"@\" ] host [ \":\" port ]\r\n\r\nSo, if we go the route of `URI-reference = relative-ref = relative-part = \"//\" authority path-abempty` I think we can legally say that CONNECT-UDP request targets are of the form `\"//\" host \":\" port` and require the `:scheme` and `:path` pseudo-headers to not be sent. This would allow us to use URIs without schemes for CONNECT-UDP.\r\n\r\nCan someone who's more of an HTTP guru comment on this please? @martinthomson @mnot @MikeBishop",
+          "createdAt": "2020-12-14T01:06:44Z",
+          "updatedAt": "2020-12-14T01:06:44Z"
+        },
+        {
+          "author": "MikeBishop",
+          "authorAssociation": "NONE",
+          "body": "It's an intriguing approach, but I'm not sure it works.\r\n\r\nSEMANTICS 4.1 says:\r\n\r\n> Each protocol element in HTTP that allows a URI reference will indicate in its ABNF production whether the element allows any form of reference (URI-reference), only a URI in absolute form (absolute-URI), only the path and optional query components, or some combination of the above. Unless otherwise indicated, URI references are parsed relative to the target URI (Section 7.1).\r\n\r\nI don't see anywhere in SEMANTICS it specifies that a method's target URI can't be relative.  However, for HTTP/1.1 at least:\r\n\r\n> When making a request to a proxy, other than a CONNECT or server-wide OPTIONS request (as detailed below), a client must send the target URI **in absolute-form** as the request-target.\r\n\r\n`absolute-form` does not permit the use of relative URIs.\r\n\r\nSince support for this method is negotiated in SETTINGS for HTTP/2 and HTTP/3, it's possible for it to depart from the general requirements for which pseudo-headers to send and specify something that looks more like CONNECT (omit `:scheme` and `:path`, for example).  However, I'm not convinced that can be generalized.\r\n\r\n@RoyFielding and @reschke, thoughts?",
+          "createdAt": "2020-12-14T17:15:50Z",
+          "updatedAt": "2020-12-14T17:15:50Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@MikeBishop support for CONNECT-UDP is not gated by a SETTINGS parameter. Only the datagram mode in h3 has a setting.",
+          "createdAt": "2020-12-14T18:05:42Z",
+          "updatedAt": "2020-12-14T18:05:42Z"
+        },
+        {
+          "author": "MikeBishop",
+          "authorAssociation": "NONE",
+          "body": "Ah, then it would need to include `:scheme` and `:path` pseudo-headers; I'm not sure off-hand if it's valid for those to be empty.",
+          "createdAt": "2020-12-14T18:28:19Z",
+          "updatedAt": "2020-12-14T18:28:19Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "NONE",
+          "body": "I think that I would prefer a setting.  It's probably true that this doesn't require special handling, but there are intermediaries that do crazy things like buffer request bodies.  A setting would avoid any potential for misunderstanding.  It makes this unusable in HTTP/1.1, but I might see that as more of a feature than a bug.",
+          "createdAt": "2020-12-14T22:20:31Z",
+          "updatedAt": "2020-12-14T22:20:31Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I would strongly prefer to avoid a setting, as it breaks the [MASQUE Obfuscation](https://tools.ietf.org/html/draft-schinazi-masque-obfuscation) use-case.",
+          "createdAt": "2020-12-14T23:49:44Z",
+          "updatedAt": "2020-12-14T23:49:44Z"
+        },
+        {
+          "author": "mnot",
+          "authorAssociation": "NONE",
+          "body": "I tend to think that defining a URI scheme (perhaps not `udp:`) is the path of least resistance here, and I don't see any immediate harm in doing so. As a thought experiment, consider how the Web would work if CONNECT had a URI scheme; that would give a distinct way to convey proxy configuration, for example. \r\n\r\nBased on the above I also think we need to clarify in Semantics that a target-uri is always absolute, even if it is transmitted as a relative uri.\r\n\r\n",
+          "createdAt": "2020-12-15T00:07:55Z",
+          "updatedAt": "2020-12-15T00:07:55Z"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "MDU6SXNzdWU3NjU3NjgxMjY=",
+      "title": "CONNECT-UDP Stream Chunk extensibility",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/24",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "https://tools.ietf.org/html/draft-ietf-masque-connect-udp-01#section-5 defines Stream Chunk and follows up with a statement about extensibility\r\n\r\n```\r\nCONNECT-UDP Stream Chunk {\r\n     CONNECT-UDP Stream Chunk Type (i) = 0x00,\r\n     UDP Payload Length (i),\r\n     UDP Payload (..),\r\n   }\r\n\r\n<snip/>\r\n\r\n   The bidirectional stream that the CONNECT-UDP request was sent on is\r\n   a sequence of CONNECT-UDP Stream Chunks.  The CONNECT-UDP Stream\r\n   Chunk Type is designed to allow future extensibility.  Endpoints that\r\n   receive a chunk with an unknown CONNECT-UDP Stream Chunk Type MUST\r\n   silently skip over that chunk.\r\n```\r\n\r\nIt isn't clear to me if the `UDP Payload Length` field belongs solely to type `0x00` or if its expected to be the chunk length and applicable to all Chunk Types that are known or unknown. If the chunk length in *not*common to all chunks, I don't see how an endpoint can silently skip unknown chunks.\r\n",
+      "createdAt": "2020-12-14T01:42:55Z",
+      "updatedAt": "2020-12-14T01:56:30Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "You're absolutely right, that text is not very well written. What I meant to say is that the type and length are generic and the value depends on the type - and if the type is 0x00 then the value is a UDP payload. I'll fix the text.",
+          "createdAt": "2020-12-14T01:56:30Z",
+          "updatedAt": "2020-12-14T01:56:30Z"
+        }
+      ]
     }
   ],
   "pulls": [
