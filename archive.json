@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-15T00:54:29.030387+00:00",
+  "timestamp": "2020-12-17T00:57:09.078117+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -370,15 +370,15 @@
       "id": "MDU6SXNzdWU2ODc2OTg4Mjg=",
       "title": "CONNECT-UDP needs a request target URI",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/8",
-      "state": "CLOSED",
+      "state": "OPEN",
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Issue created by me on [2020-08-13](https://github.com/DavidSchinazi/masque-drafts/issues/29):\r\n\r\n[connect-udp-00 s3](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-3) mainly copied most of the CONNECT-UDP design from CONNECT, but than goes against some existing HTTP semantics. In particular, every HTTP method is supposed to use URIs to represent their request target (this was mentioned in [RFC 7231 s2](https://tools.ietf.org/html/rfc7231#section-2) and clarified in [draft-ietf-httpbis-semantics s6.1](https://tools.ietf.org/html/draft-ietf-httpbis-semantics-10#section-6.1)). CONNECT and OPTIONS are noted as existing exceptions, but new methods are not allowed exceptions, to allow intermediaries to proxy unknown methods. CONNECT-UDP only cares about the authority (host and port) portion of the URI, so we can easily encode that as an URI and mandate that the path MUST be \"/\" and the query MUST be empty. The main open question is what scheme to use. We could either reuse https, or register a new one.",
       "createdAt": "2020-08-28T04:16:15Z",
-      "updatedAt": "2020-12-13T04:42:15Z",
-      "closedAt": "2020-12-13T04:42:15Z",
+      "updatedAt": "2020-12-15T14:39:00Z",
+      "closedAt": null,
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -421,6 +421,27 @@
           "body": "This should be fixed in today's update to the drafts.",
           "createdAt": "2020-12-13T04:42:15Z",
           "updatedAt": "2020-12-13T04:42:15Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I say that you adopted `masque://` in the draft, however,  don't think we reached consensus on this. I recommend to reopen this issue and continue the discussion.",
+          "createdAt": "2020-12-15T13:58:19Z",
+          "updatedAt": "2020-12-15T13:58:19Z"
+        },
+        {
+          "author": "ekr",
+          "authorAssociation": "NONE",
+          "body": "I concur with Mirja here.",
+          "createdAt": "2020-12-15T14:00:44Z",
+          "updatedAt": "2020-12-15T14:00:44Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "NONE",
+          "body": "Re-opening, as this was not confirmed on the list.",
+          "createdAt": "2020-12-15T14:38:59Z",
+          "updatedAt": "2020-12-15T14:38:59Z"
         }
       ]
     },
@@ -659,7 +680,7 @@
       "labels": [],
       "body": "So I'd kinda forgotten that when H3 DATAGRAMS are not available (e.g. in HTTP/2 etc) CONNECT-UDP allows a mode where UDP datagram payload is transferred to the proxy as one contiguous bytestream of HTTP payload. How do receiving endpoints slice up this bytestream to ensure the atomic payloads are reconstructed properly? A proxy needs to make sure it sends the correct payload in the UDP datagram is will send, a client needs to construct the accurate UDP datagram payload in order to process whatever protocol it is tunnelling.\r\n\r\nThe specification doesn't say anything about how message boundaries might be signalled or acted upon. Is the intention maybe to rely on DATA frames for delineation? Implementations might not be able to guarantee that frames boundaries match 1:1. For instance quiche provides a r[ecv_body() method](https://docs.quic.tech/quiche/h3/struct.Connection.html#method.recv_body) to read arbitrary amounts of payload data from request streams; DATA rame boundaries are not exposed to applications.",
       "createdAt": "2020-11-05T12:29:46Z",
-      "updatedAt": "2020-12-13T04:42:23Z",
+      "updatedAt": "2020-12-15T17:36:13Z",
       "closedAt": "2020-12-13T04:42:23Z",
       "comments": [
         {
@@ -689,6 +710,27 @@
           "body": "This should be fixed in today's update to the drafts.",
           "createdAt": "2020-12-13T04:42:23Z",
           "updatedAt": "2020-12-13T04:42:23Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I saw that the new draft version proposes \"CONNECT-UDP Stream Chunk\". This looks like a good approach, however, I would still like to conclude the discussion why this is better than using HTTP DATA frames.",
+          "createdAt": "2020-12-15T14:30:48Z",
+          "updatedAt": "2020-12-15T14:30:48Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "NONE",
+          "body": "My initial intuition is that Stream Chunks were conveyed in DATA frames. I'm wondering if I lept to the wrong conclusion.\r\n\r\nP.S: I also wondered if Stream Chunk should actually be an HTTP/3 frameset of its own. I think some minor editorialization that could help clarify things.",
+          "createdAt": "2020-12-15T14:38:53Z",
+          "updatedAt": "2020-12-15T14:38:53Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yes, Stream Chunks are conveyed over DATA frames. Stream Chunks have their own framing (as opposed to using the DATA frame boundaries) to simplify implementation, and to support HTTP/1.1 where there are no HTTP DATA frames.",
+          "createdAt": "2020-12-15T17:36:13Z",
+          "updatedAt": "2020-12-15T17:36:13Z"
         }
       ]
     },
@@ -704,7 +746,7 @@
       "labels": [],
       "body": "I think it might help to make the purpose of the datagram-flow-id header clearer in the specification.\r\n\r\nFor context, I was giving an overview of HTTP/3 CONNECT-UDP to someone completely new to MASQUE. The inclusion of a flow ID in the H3 DATAGRAM frame makes total sense, it's for multiplexing. However, in my example, the client made a request on stream ID 0 and used a datagram-flow-id of 0. Partly because of this overlap, the person I was presenting to made the comment \"why do you need the datagram-flow-id header, couldn't you just use the stream ID\"? Since the stream and datagram flow IDs have a linked lifetime, this observation makes some sense. \r\n\r\nThere might be benefits to having independence between stream ID and flow ID space. However, having reread the spec a few times now, I think the main purpose comes from the intention to be flexible. What I mean by that is, the use of HTTP/3 DATAGRAMS is opportunistic and that it is reasonable to fallback to carying tunnelled UDP datagram payload on streams. So, is the primary intention that \"datagram-flow-id\" is echoed in responses to allow clients to understand if they can use DATAGRAMS or if they have to use streams? \r\n\r\n",
       "createdAt": "2020-11-05T12:33:03Z",
-      "updatedAt": "2020-12-13T04:42:25Z",
+      "updatedAt": "2020-12-16T17:36:45Z",
       "closedAt": "2020-12-13T04:42:25Z",
       "comments": [
         {
@@ -734,6 +776,13 @@
           "body": "This should be fixed in today's update to the drafts.",
           "createdAt": "2020-12-13T04:42:25Z",
           "updatedAt": "2020-12-13T04:42:25Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "@DavidSchinazi can you say a bit more here how this is addressed. I don't think I saw anything in the new docs that e.g. talk about re-use (or did I miss that?). I guess it would be helpful to say a bit more about how to handle flow ID then just saying there is a service doing it....",
+          "createdAt": "2020-12-16T17:36:44Z",
+          "updatedAt": "2020-12-16T17:36:44Z"
         }
       ]
     },
@@ -938,7 +987,7 @@
       "labels": [],
       "body": "[RFC 7540](https://tools.ietf.org/html/rfc7540#section-8.3) requires that CONNECT requests omit the `:scheme` pseudo-header:\r\n\r\n>   The \":scheme\" and \":path\" pseudo-header fields MUST be omitted.\r\n\r\nWhy does this draft need to define a URI scheme and then include that in `:scheme`?\r\n\r\nThere are already two different definitions for `udp:` URI scheme.  Both seem - at least on face value - fairly sensible, but they both come with considerable baggage.\r\n\r\nThe question I'd like to ask is whether this protocol even needs a URI scheme at all.  My first inclination is very much that it does not.",
       "createdAt": "2020-12-14T00:34:36Z",
-      "updatedAt": "2020-12-15T00:07:55Z",
+      "updatedAt": "2020-12-15T16:22:11Z",
       "closedAt": null,
       "comments": [
         {
@@ -989,6 +1038,13 @@
           "body": "I tend to think that defining a URI scheme (perhaps not `udp:`) is the path of least resistance here, and I don't see any immediate harm in doing so. As a thought experiment, consider how the Web would work if CONNECT had a URI scheme; that would give a distinct way to convey proxy configuration, for example. \r\n\r\nBased on the above I also think we need to clarify in Semantics that a target-uri is always absolute, even if it is transmitted as a relative uri.\r\n\r\n",
           "createdAt": "2020-12-15T00:07:55Z",
           "updatedAt": "2020-12-15T00:07:55Z"
+        },
+        {
+          "author": "MikeBishop",
+          "authorAssociation": "NONE",
+          "body": "For your obfuscation goals, the client needs to initiate any feature detection and do so after or in parallel with authentication.  So you're right, probably that precludes a setting unless you're using client certs to authenticate (which would itself be visible on a probe, though not clear evidence of Masque).  Then I agree with @mnot, that your path of least resistance is to mint a scheme for a UDP connection.\r\n\r\nThe fact that `udp://` has been used to describe other services available over UDP is regrettable, since those services actually intended to convey certain protocol endpoints.  In this instance, you are literally describing a UDP connection with no protocol-specific properties; I'd consider asking @dthaler if he'd be willing to have the provisional registration (which [he did as an experiment](https://datatracker.ietf.org/meeting/88/materials/slides-88-appsawg-9/)) replaced by a permanent one that simply designates `udp://` as describing a UDP endpoint without conveying application-layer protocol expectations.",
+          "createdAt": "2020-12-15T16:22:11Z",
+          "updatedAt": "2020-12-15T16:22:11Z"
         }
       ]
     },
@@ -1013,6 +1069,54 @@
           "body": "You're absolutely right, that text is not very well written. What I meant to say is that the type and length are generic and the value depends on the type - and if the type is 0x00 then the value is a UDP payload. I'll fix the text.",
           "createdAt": "2020-12-14T01:56:30Z",
           "updatedAt": "2020-12-14T01:56:30Z"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "MDU6SXNzdWU3Njc2NDYzNDY=",
+      "title": "Recovery consideration",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/25",
+      "state": "OPEN",
+      "author": "mirjak",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The new draft version says:\r\n\r\n```\r\n   When the protocol running over UDP that is being proxied uses loss\r\n   recovery (e.g., [QUIC]), and the underlying HTTP connection runs over\r\n   TCP, the proxied traffic will incur at least two nested loss recovery\r\n   mechanisms.  This can reduce performance as both can sometimes\r\n   independently retransmit the same data.  To avoid this, HTTP/3\r\n   datagrams SHOULD be used.\r\n```\r\n\r\nI think this text it to general. The problem only occurs if both control loop act on the same time scale. If the outer control however, has a much short delay than the e2e connection, losses will be retransmitted locally and not detected as loss by the e2e connection. As such this would translate local losses into delay variation. As long as these delay variation are small it can actually benefit performance.\r\n\r\n",
+      "createdAt": "2020-12-15T14:23:45Z",
+      "updatedAt": "2020-12-15T17:38:10Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@mirjak can you send a PR with the text you have in mind?",
+          "createdAt": "2020-12-15T17:38:09Z",
+          "updatedAt": "2020-12-15T17:38:09Z"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "MDU6SXNzdWU3NjkxNjc4MDM=",
+      "title": "IP assignment",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/26",
+      "state": "OPEN",
+      "author": "mirjak",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft currently doesn't say anything/much (?) about IP address assignment. The client might need a way to request a certain IP address, request information about the used IP address, or request requirements/restriction on the IP address assignment by the proxy (e.g. stable IP address or address obfuscation).",
+      "createdAt": "2020-12-16T18:21:34Z",
+      "updatedAt": "2020-12-16T18:28:33Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "Further I think additional text is also needed on handling of incoming traffic from the target server. I assume that the proxy will map that traffic based on the 5-tuple to an active CONNECT-UDP session, therefore the proxy would need to control the client side's src port at least. I guess there are usually no specific requirements from the client on the selected source port but some discussion on this would be good in the draft.",
+          "createdAt": "2020-12-16T18:28:33Z",
+          "updatedAt": "2020-12-16T18:28:33Z"
         }
       ]
     }
