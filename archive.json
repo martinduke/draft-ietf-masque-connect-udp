@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-17T00:57:09.078117+00:00",
+  "timestamp": "2020-12-20T00:59:47.047935+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -746,7 +746,7 @@
       "labels": [],
       "body": "I think it might help to make the purpose of the datagram-flow-id header clearer in the specification.\r\n\r\nFor context, I was giving an overview of HTTP/3 CONNECT-UDP to someone completely new to MASQUE. The inclusion of a flow ID in the H3 DATAGRAM frame makes total sense, it's for multiplexing. However, in my example, the client made a request on stream ID 0 and used a datagram-flow-id of 0. Partly because of this overlap, the person I was presenting to made the comment \"why do you need the datagram-flow-id header, couldn't you just use the stream ID\"? Since the stream and datagram flow IDs have a linked lifetime, this observation makes some sense. \r\n\r\nThere might be benefits to having independence between stream ID and flow ID space. However, having reread the spec a few times now, I think the main purpose comes from the intention to be flexible. What I mean by that is, the use of HTTP/3 DATAGRAMS is opportunistic and that it is reasonable to fallback to carying tunnelled UDP datagram payload on streams. So, is the primary intention that \"datagram-flow-id\" is echoed in responses to allow clients to understand if they can use DATAGRAMS or if they have to use streams? \r\n\r\n",
       "createdAt": "2020-11-05T12:33:03Z",
-      "updatedAt": "2020-12-16T17:36:45Z",
+      "updatedAt": "2020-12-17T17:28:21Z",
       "closedAt": "2020-12-13T04:42:25Z",
       "comments": [
         {
@@ -783,6 +783,13 @@
           "body": "@DavidSchinazi can you say a bit more here how this is addressed. I don't think I saw anything in the new docs that e.g. talk about re-use (or did I miss that?). I guess it would be helpful to say a bit more about how to handle flow ID then just saying there is a service doing it....",
           "createdAt": "2020-12-16T17:36:44Z",
           "updatedAt": "2020-12-16T17:36:44Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@mirjak yes, I need to add a few more clarifications, that work is tracked by https://github.com/DavidSchinazi/draft-h3-datagram/issues/9",
+          "createdAt": "2020-12-17T17:28:21Z",
+          "updatedAt": "2020-12-17T17:28:21Z"
         }
       ]
     },
@@ -1105,10 +1112,12 @@
       "author": "mirjak",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "extension"
+      ],
       "body": "The draft currently doesn't say anything/much (?) about IP address assignment. The client might need a way to request a certain IP address, request information about the used IP address, or request requirements/restriction on the IP address assignment by the proxy (e.g. stable IP address or address obfuscation).",
       "createdAt": "2020-12-16T18:21:34Z",
-      "updatedAt": "2020-12-16T18:28:33Z",
+      "updatedAt": "2020-12-17T18:19:48Z",
       "closedAt": null,
       "comments": [
         {
@@ -1117,6 +1126,27 @@
           "body": "Further I think additional text is also needed on handling of incoming traffic from the target server. I assume that the proxy will map that traffic based on the 5-tuple to an active CONNECT-UDP session, therefore the proxy would need to control the client side's src port at least. I guess there are usually no specific requirements from the client on the selected source port but some discussion on this would be good in the draft.",
           "createdAt": "2020-12-16T18:28:33Z",
           "updatedAt": "2020-12-16T18:28:33Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This sounds like something that could be handled by an extension. There's no need to discuss IP assignment in CONNECT-UDP just like there is no need to discuss it in CONNECT.\r\n\r\nRegarding https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/26#issuecomment-746781776, can you please send a PR with the text you have in mind?",
+          "createdAt": "2020-12-17T17:39:06Z",
+          "updatedAt": "2020-12-17T17:39:06Z"
+        },
+        {
+          "author": "mirjak",
+          "authorAssociation": "NONE",
+          "body": "I was looking for something like section 2.1 in the quic proxying draft: https://www.ietf.org/archive/id/draft-pauly-masque-quic-proxy-00.html#name-datagram-flow-id-mapping",
+          "createdAt": "2020-12-17T18:14:56Z",
+          "updatedAt": "2020-12-17T18:14:56Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Sounds great, can you send a PR?",
+          "createdAt": "2020-12-17T18:19:48Z",
+          "updatedAt": "2020-12-17T18:19:48Z"
         }
       ]
     }
