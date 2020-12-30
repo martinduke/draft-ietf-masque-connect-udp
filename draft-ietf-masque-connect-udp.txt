@@ -4,8 +4,8 @@
 
 Network Working Group                                        D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Standards Track                        14 December 2020
-Expires: 17 June 2021
+Intended status: Standards Track                        30 December 2020
+Expires: 3 July 2021
 
 
                       The CONNECT-UDP HTTP Method
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 June 2021.
+   This Internet-Draft will expire on 3 July 2021.
 
 Copyright Notice
 
@@ -66,16 +66,17 @@ Table of Contents
    2.  Supported HTTP Versions
    3.  The CONNECT-UDP Method
    4.  Datagram Encoding of Proxied UDP Packets
-   5.  Stream Encoding of Proxied UDP Packets
-   6.  Proxy Handling
-   7.  HTTP Intermediaries
-   8.  Performance Considerations
-   9.  Security Considerations
-   10. IANA Considerations
-     10.1.  HTTP Method
-     10.2.  URI Scheme Registration
-     10.3.  Stream Chunk Type Registration
-   11. Normative References
+   5.  Stream Chunks
+   6.  Stream Encoding of Proxied UDP Packets
+   7.  Proxy Handling
+   8.  HTTP Intermediaries
+   9.  Performance Considerations
+   10. Security Considerations
+   11. IANA Considerations
+     11.1.  HTTP Method
+     11.2.  URI Scheme Registration
+     11.3.  Stream Chunk Type Registration
+   12. Normative References
    Acknowledgments
    Author's Address
 
@@ -220,36 +221,52 @@ Table of Contents
    [STRUCT-HDR]).  Proxies MUST NOT echo parameters on the "Datagram-
    Flow-Id" header if it does not understand their semantics.
 
-5.  Stream Encoding of Proxied UDP Packets
-
-   If HTTP/3 datagrams are not supported, the stream is used to convey
-   UDP payloads, by using the following format (using the notation from
-   the "Notational Conventions" section of [QUIC]):
-
-   CONNECT-UDP Stream Chunk {
-     CONNECT-UDP Stream Chunk Type (i) = 0x00,
-     UDP Payload Length (i),
-     UDP Payload (..),
-   }
-
-                 Figure 1: CONNECT-UDP Stream Chunk Format
-
-   CONNECT-UDP Stream Chunk Type:  A variable-length integer indicating
-      the Type of the CONNECT-UDP Stream Chunk, set to 0x00 to indicate
-      a UDP Payload.
-
-   UDP Payload Length:  The length of the UDP Payload field following
-      this field.
-
-   UDP Payload:  The payload of the UDP datagram.
+5.  Stream Chunks
 
    The bidirectional stream that the CONNECT-UDP request was sent on is
-   a sequence of CONNECT-UDP Stream Chunks.  The CONNECT-UDP Stream
-   Chunk Type is designed to allow future extensibility.  Endpoints that
-   receive a chunk with an unknown CONNECT-UDP Stream Chunk Type MUST
-   silently skip over that chunk.
+   a sequence of CONNECT-UDP Stream Chunks, which are defined as a
+   sequence of type-length-value tuples using the following format
+   (using the notation from the "Notational Conventions" section of
+   [QUIC]):
 
-6.  Proxy Handling
+   CONNECT-UDP Stream {
+     CONNECT-UDP Stream Chunk (..) ...,
+   }
+
+                    Figure 1: CONNECT-UDP Stream Format
+
+   CONNECT-UDP Stream Chunk {
+     CONNECT-UDP Stream Chunk Type (i),
+     CONNECT-UDP Stream Chunk Length (i),
+     CONNECT-UDP Stream Chunk Value (..),
+   }
+
+                 Figure 2: CONNECT-UDP Stream Chunk Format
+
+   CONNECT-UDP Stream Chunk Type:  A variable-length integer indicating
+      the Type of the CONNECT-UDP Stream Chunk.  Endpoints that receive
+      a chunk with an unknown CONNECT-UDP Stream Chunk Type MUST
+      silently skip over that chunk.
+
+   CONNECT-UDP Stream Chunk Length:  The length of the CONNECT-UDP
+      Stream Chunk Value field following this field.  Note that this
+      field can have a value of zero.
+
+   CONNECT-UDP Stream Chunk Value:  The payload of this chunk.  Its
+      semantics are determined by the value of the CONNECT-UDP Stream
+      Chunk Type field.
+
+6.  Stream Encoding of Proxied UDP Packets
+
+   CONNECT-UDP Stream Chunks can be used to convey UDP payloads, by
+   using a CONNECT-UDP Stream Chunk Type of UDP_PACKET (value 0x00).
+   The payload of UDP packets is encoded in its unmodified entirety in
+   the CONNECT-UDP Stream Chunk Value field.  This is necessary when the
+   version of HTTP in use does not support QUIC DATAGRAM frames, but MAY
+   also be used when datagrams are supported.  Note that empty UDP
+   payloads are allowed.
+
+7.  Proxy Handling
 
    Unlike TCP, UDP is connection-less.  The proxy that opens the UDP
    socket has no way of knowing whether the destination is reachable.
@@ -269,7 +286,7 @@ Table of Contents
    Proxies MAY choose to close sockets due to a period of inactivity,
    but they MUST close the CONNECT-UDP stream before closing the socket.
 
-7.  HTTP Intermediaries
+8.  HTTP Intermediaries
 
    HTTP/3 DATAGRAM flow identifiers are specific to a given HTTP/3
    connection.  However, in some cases, an HTTP request may travel
@@ -293,7 +310,7 @@ Table of Contents
    also choose to use datagrams on only one of the two connections, and
    translate between datagrams and streams.
 
-8.  Performance Considerations
+9.  Performance Considerations
 
    Proxies SHOULD strive to avoid increasing burstiness of UDP traffic:
    they SHOULD NOT queue packets in order to increase batching.
@@ -312,7 +329,7 @@ Table of Contents
    independently retransmit the same data.  To avoid this, HTTP/3
    datagrams SHOULD be used.
 
-9.  Security Considerations
+10.  Security Considerations
 
    There are significant risks in allowing arbitrary clients to
    establish a tunnel to arbitrary servers, as that could allow bad
@@ -330,9 +347,9 @@ Table of Contents
    scenarios.  Proxies MUST NOT introspect the contents of UDP payloads
    as that would lead to ossification of UDP-based protocols by proxies.
 
-10.  IANA Considerations
+11.  IANA Considerations
 
-10.1.  HTTP Method
+11.1.  HTTP Method
 
    This document will request IANA to register "CONNECT-UDP" in the HTTP
    Method Registry (IETF review) maintained at
@@ -344,7 +361,7 @@ Table of Contents
      | CONNECT-UDP |  no  |     no     | This document |
      +-------------+------+------------+---------------+
 
-10.2.  URI Scheme Registration
+11.2.  URI Scheme Registration
 
    This document will request IANA to register the URI scheme "masque".
 
@@ -357,7 +374,7 @@ Table of Contents
    The "host" and "port" component MUST NOT be empty, and the "port"
    component MUST NOT be 0.
 
-10.3.  Stream Chunk Type Registration
+11.3.  Stream Chunk Type Registration
 
    This document will request IANA to create a "CONNECT-UDP Stream Chunk
    Type" registry.  This registry governs a 62-bit space, and follows
@@ -382,7 +399,7 @@ Table of Contents
    is, 23, 60, 97, ...) are reserved; these values MUST NOT be assigned
    by IANA and MUST NOT appear in the listing of assigned values.
 
-11.  Normative References
+12.  Normative References
 
    [DGRAM]    Pauly, T., Kinnear, E., and D. Schinazi, "An Unreliable
               Datagram Extension to QUIC", Work in Progress, Internet-
@@ -395,10 +412,11 @@ Table of Contents
               DOI 10.17487/RFC7540, May 2015,
               <https://www.rfc-editor.org/info/rfc7540>.
 
-   [H3DGRAM]  Schinazi, D., "Using QUIC Datagrams with HTTP/3", Work in
-              Progress, Internet-Draft, draft-schinazi-masque-h3-
-              datagram-01, 12 December 2020, <http://www.ietf.org/
-              internet-drafts/draft-schinazi-masque-h3-datagram-01.txt>.
+   [H3DGRAM]  Schinazi, D. and L. Pardue, "Using QUIC Datagrams with
+              HTTP/3", Work in Progress, Internet-Draft, draft-schinazi-
+              masque-h3-datagram-02, 14 December 2020,
+              <http://www.ietf.org/internet-drafts/draft-schinazi-
+              masque-h3-datagram-02.txt>.
 
    [QUIC]     Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
               and Secure Transport", Work in Progress, Internet-Draft,
@@ -452,9 +470,11 @@ Table of Contents
 
 Acknowledgments
 
-   This proposal was inspired directly or indirectly by prior work from
-   many people.  The author would like to thank Eric Rescorla for
-   suggesting to use an HTTP method to proxy UDP.  Thanks to Lucas
+   This document is a product of the MASQUE Working Group, and the
+   author thanks all MASQUE enthusiasts for their contibutions.  This
+   proposal was inspired directly or indirectly by prior work from many
+   people.  In particular, the author would like to thank Eric Rescorla
+   for suggesting to use an HTTP method to proxy UDP.  Thanks to Lucas
    Pardue for their inputs on this document.
 
 Author's Address

@@ -77,11 +77,11 @@ body {
 }
 h1, h2, h3 {
   font-size: 22px;
-  line-height: 26px;
+  line-height: 27px;
 }
 h4, h5, h6 {
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 20px;
+  line-height: 24px;
 }
 
 /* general structure */
@@ -237,6 +237,7 @@ img {
 }
 figure {
   margin: 0.5em 0;
+  padding: 0;
 }
 figure blockquote {
   margin: 0.8em 0.4em 0.4em;
@@ -826,7 +827,7 @@ address div.right {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schinazi</td>
-<td class="center">Expires 17 June 2021</td>
+<td class="center">Expires 3 July 2021</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -839,12 +840,12 @@ address div.right {
 <dd class="internet-draft">draft-ietf-masque-connect-udp-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-12-14" class="published">14 December 2020</time>
+<time datetime="2020-12-30" class="published">30 December 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2021-06-17">17 June 2021</time></dd>
+<dd class="expires"><time datetime="2021-07-03">3 July 2021</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -890,7 +891,7 @@ list <span><a href="masque@ietf.org">masque@ietf.org</a></span> or on the GitHub
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 June 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 July 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -921,8 +922,8 @@ list <span><a href="masque@ietf.org">masque@ietf.org</a></span> or on the GitHub
 <nav class="toc"><ul class="compact ulEmpty toc">
 <li class="compact ulEmpty toc" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-toc.1-1.1.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.1.2.1">
+<ul class="compact ulEmpty toc">
+<li class="compact ulEmpty toc" id="section-toc.1-1.1.2.1">
                 <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-conventions-and-definitions" class="xref">Conventions and Definitions</a><a href="#section-toc.1-1.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
@@ -937,42 +938,45 @@ list <span><a href="masque@ietf.org">masque@ietf.org</a></span> or on the GitHub
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-datagram-encoding-of-proxie" class="xref">Datagram Encoding of Proxied UDP Packets</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="compact ulEmpty toc" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-stream-encoding-of-proxied-" class="xref">Stream Encoding of Proxied UDP Packets</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-stream-chunks" class="xref">Stream Chunks</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="compact ulEmpty toc" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-proxy-handling" class="xref">Proxy Handling</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-stream-encoding-of-proxied-" class="xref">Stream Encoding of Proxied UDP Packets</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="compact ulEmpty toc" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-http-intermediaries" class="xref">HTTP Intermediaries</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-proxy-handling" class="xref">Proxy Handling</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="compact ulEmpty toc" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-performance-considerations" class="xref">Performance Considerations</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-http-intermediaries" class="xref">HTTP Intermediaries</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="compact ulEmpty toc" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.9.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-performance-considerations" class="xref">Performance Considerations</a><a href="#section-toc.1-1.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="compact ulEmpty toc" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.10.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="xref">10.1</a>.  <a href="#name-http-method" class="xref">HTTP Method</a><a href="#section-toc.1-1.10.2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.10.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="xref">10.2</a>.  <a href="#name-uri-scheme-registration" class="xref">URI Scheme Registration</a><a href="#section-toc.1-1.10.2.2.1" class="pilcrow">¶</a></p>
+          <li class="compact ulEmpty toc" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="xref">11</a>. <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.11.1" class="pilcrow">¶</a></p>
+<ul class="compact ulEmpty toc">
+<li class="compact ulEmpty toc" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="xref">11.1</a>.  <a href="#name-http-method" class="xref">HTTP Method</a><a href="#section-toc.1-1.11.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.10.2.3">
-                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="xref">10.3</a>.  <a href="#name-stream-chunk-type-registrat" class="xref">Stream Chunk Type Registration</a><a href="#section-toc.1-1.10.2.3.1" class="pilcrow">¶</a></p>
+              <li class="compact ulEmpty toc" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="xref">11.2</a>.  <a href="#name-uri-scheme-registration" class="xref">URI Scheme Registration</a><a href="#section-toc.1-1.11.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="compact ulEmpty toc" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="xref">11.3</a>.  <a href="#name-stream-chunk-type-registrat" class="xref">Stream Chunk Type Registration</a><a href="#section-toc.1-1.11.2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
-          <li class="compact ulEmpty toc" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="xref">11</a>. <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-toc.1-1.11.1" class="pilcrow">¶</a></p>
-</li>
           <li class="compact ulEmpty toc" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a><a href="#section-toc.1-1.12.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="xref">12</a>. <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-toc.1-1.12.1" class="pilcrow">¶</a></p>
 </li>
           <li class="compact ulEmpty toc" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#section-appendix.b" class="xref"></a><a href="#name-authors-address" class="xref">Author's Address</a><a href="#section-toc.1-1.13.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a><a href="#section-toc.1-1.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="compact ulEmpty toc" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#section-appendix.b" class="xref"></a><a href="#name-authors-address" class="xref">Author's Address</a><a href="#section-toc.1-1.14.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </nav>
@@ -1120,86 +1124,112 @@ parameters on the "Datagram-Flow-Id" header if it does not understand their
 semantics.<a href="#section-4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="stream-encoding">
+<div id="stream-chunks">
 <section id="section-5">
-      <h2 id="name-stream-encoding-of-proxied-">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-stream-encoding-of-proxied-" class="section-name selfRef">Stream Encoding of Proxied UDP Packets</a>
+      <h2 id="name-stream-chunks">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-stream-chunks" class="section-name selfRef">Stream Chunks</a>
       </h2>
-<p id="section-5-1">If HTTP/3 datagrams are not supported, the stream is used to convey UDP
-payloads, by using the following format (using the notation from the
-"Notational Conventions" section of <span>[<a href="#QUIC" class="xref">QUIC</a>]</span>):<a href="#section-5-1" class="pilcrow">¶</a></p>
-<span id="name-connect-udp-stream-chunk-fo"></span><div id="stream-chunk-format">
+<p id="section-5-1">The bidirectional stream that the CONNECT-UDP request was sent on is a
+sequence of CONNECT-UDP Stream Chunks, which are defined as a sequence of
+type-length-value tuples using the following format (using the notation from
+the "Notational Conventions" section of <span>[<a href="#QUIC" class="xref">QUIC</a>]</span>):<a href="#section-5-1" class="pilcrow">¶</a></p>
+<span id="name-connect-udp-stream-format"></span><div id="stream-chunk-format">
 <figure id="figure-1">
         <div class="artwork art-text alignLeft" id="section-5-2.1">
 <pre>
-CONNECT-UDP Stream Chunk {
-  CONNECT-UDP Stream Chunk Type (i) = 0x00,
-  UDP Payload Length (i),
-  UDP Payload (..),
+CONNECT-UDP Stream {
+  CONNECT-UDP Stream Chunk (..) ...,
 }
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-connect-udp-stream-format" class="selfRef">CONNECT-UDP Stream Format</a>
+        </figcaption></figure>
+</div>
+<span id="name-connect-udp-stream-chunk-fo"></span><div id="stream-format">
+<figure id="figure-2">
+        <div class="artwork art-text alignLeft" id="section-5-3.1">
+<pre>
+CONNECT-UDP Stream Chunk {
+  CONNECT-UDP Stream Chunk Type (i),
+  CONNECT-UDP Stream Chunk Length (i),
+  CONNECT-UDP Stream Chunk Value (..),
+}
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-connect-udp-stream-chunk-fo" class="selfRef">CONNECT-UDP Stream Chunk Format</a>
         </figcaption></figure>
 </div>
-<span class="break"></span><dl class="dlParallel" id="section-5-3">
-        <dt id="section-5-3.1">
+<span class="break"></span><dl class="dlParallel" id="section-5-4">
+        <dt id="section-5-4.1">
 CONNECT-UDP Stream Chunk Type:  </dt>
-        <dd style="margin-left: 1.5em" id="section-5-3.2">
-          <p id="section-5-3.2.1">A variable-length integer indicating the Type of the CONNECT-UDP Stream Chunk,
-set to 0x00 to indicate a UDP Payload.<a href="#section-5-3.2.1" class="pilcrow">¶</a></p>
+        <dd style="margin-left: 1.5em" id="section-5-4.2">
+          <p id="section-5-4.2.1">A variable-length integer indicating the Type of the CONNECT-UDP Stream
+Chunk. Endpoints that receive a chunk with an unknown CONNECT-UDP Stream Chunk
+Type MUST silently skip over that chunk.<a href="#section-5-4.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-5-3.3">
-UDP Payload Length:  </dt>
-        <dd style="margin-left: 1.5em" id="section-5-3.4">
-          <p id="section-5-3.4.1">The length of the UDP Payload field following this field.<a href="#section-5-3.4.1" class="pilcrow">¶</a></p>
+<dt id="section-5-4.3">
+CONNECT-UDP Stream Chunk Length:  </dt>
+        <dd style="margin-left: 1.5em" id="section-5-4.4">
+          <p id="section-5-4.4.1">The length of the CONNECT-UDP Stream Chunk Value field following this field.
+Note that this field can have a value of zero.<a href="#section-5-4.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-5-3.5">
-UDP Payload:  </dt>
-        <dd style="margin-left: 1.5em" id="section-5-3.6">
-          <p id="section-5-3.6.1">The payload of the UDP datagram.<a href="#section-5-3.6.1" class="pilcrow">¶</a></p>
+<dt id="section-5-4.5">
+CONNECT-UDP Stream Chunk Value:  </dt>
+        <dd style="margin-left: 1.5em" id="section-5-4.6">
+          <p id="section-5-4.6.1">The payload of this chunk. Its semantics are determined by the value of the
+CONNECT-UDP Stream Chunk Type field.<a href="#section-5-4.6.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-5-4">The bidirectional stream that the CONNECT-UDP request was sent on is a sequence
-of CONNECT-UDP Stream Chunks. The CONNECT-UDP Stream Chunk Type is designed to
-allow future extensibility. Endpoints that receive a chunk with an unknown
-CONNECT-UDP Stream Chunk Type MUST silently skip over that chunk.<a href="#section-5-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="stream-encoding">
+<section id="section-6">
+      <h2 id="name-stream-encoding-of-proxied-">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-stream-encoding-of-proxied-" class="section-name selfRef">Stream Encoding of Proxied UDP Packets</a>
+      </h2>
+<p id="section-6-1">CONNECT-UDP Stream Chunks can be used to convey UDP payloads, by using a
+CONNECT-UDP Stream Chunk Type of UDP_PACKET (value 0x00). The payload of UDP
+packets is encoded in its unmodified entirety in the CONNECT-UDP Stream Chunk
+Value field. This is necessary when the version of HTTP in use does not
+support QUIC DATAGRAM frames, but MAY also be used when datagrams are
+supported. Note that empty UDP payloads are allowed.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="proxy-handling">
-<section id="section-6">
+<section id="section-7">
       <h2 id="name-proxy-handling">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-proxy-handling" class="section-name selfRef">Proxy Handling</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-proxy-handling" class="section-name selfRef">Proxy Handling</a>
       </h2>
-<p id="section-6-1">Unlike TCP, UDP is connection-less. The proxy that opens the UDP socket has no
+<p id="section-7-1">Unlike TCP, UDP is connection-less. The proxy that opens the UDP socket has no
 way of knowing whether the destination is reachable. Therefore it needs to
-respond to the CONNECT-UDP request without waiting for a TCP SYN-ACK.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">Proxies can use connected UDP sockets if their operating system supports them,
+respond to the CONNECT-UDP request without waiting for a TCP SYN-ACK.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">Proxies can use connected UDP sockets if their operating system supports them,
 as that allows the proxy to rely on the kernel to only send it UDP
 packets that match the correct 5-tuple. If the proxy uses a non-connected
 socket, it MUST validate the IP source address and UDP source port on received
 packets to ensure they match the client's CONNECT-UDP request. Packets that do
-not match MUST be discarded by the proxy.<a href="#section-6-2" class="pilcrow">¶</a></p>
-<p id="section-6-3">The lifetime of the socket is tied to the CONNECT-UDP stream. The proxy MUST
+not match MUST be discarded by the proxy.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">The lifetime of the socket is tied to the CONNECT-UDP stream. The proxy MUST
 keep the socket open while the CONNECT-UDP stream is open. Proxies MAY choose
 to close sockets due to a period of inactivity, but they MUST close the
-CONNECT-UDP stream before closing the socket.<a href="#section-6-3" class="pilcrow">¶</a></p>
+CONNECT-UDP stream before closing the socket.<a href="#section-7-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="intermediaries">
-<section id="section-7">
+<section id="section-8">
       <h2 id="name-http-intermediaries">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-http-intermediaries" class="section-name selfRef">HTTP Intermediaries</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-http-intermediaries" class="section-name selfRef">HTTP Intermediaries</a>
       </h2>
-<p id="section-7-1">HTTP/3 DATAGRAM flow identifiers are specific to a given HTTP/3 connection.
+<p id="section-8-1">HTTP/3 DATAGRAM flow identifiers are specific to a given HTTP/3 connection.
 However, in some cases, an HTTP request may travel across multiple HTTP
 connections if there are HTTP intermediaries involved; see Section 2.3 of
-<span>[<a href="#RFC7230" class="xref">RFC7230</a>]</span>.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">Intermediaries that support both CONNECT-UDP and HTTP/3 datagrams MUST
+<span>[<a href="#RFC7230" class="xref">RFC7230</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">Intermediaries that support both CONNECT-UDP and HTTP/3 datagrams MUST
 negotiate flow identifiers separately on the client-facing and server-facing
 connections. This is accomplished by having the intermediary parse the
 "Datagram-Flow-Id" header on all CONNECT-UDP requests it receives, and sending
@@ -1212,135 +1242,135 @@ server's reply to see if the server sent the "Datagram-Flow-Id" header on the
 response. The intermediary then translates datagrams between the two
 connections by using the flow identifier specific to that connection. An
 intermediary MAY also choose to use datagrams on only one of the two
-connections, and translate between datagrams and streams.<a href="#section-7-2" class="pilcrow">¶</a></p>
+connections, and translate between datagrams and streams.<a href="#section-8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="performance">
-<section id="section-8">
+<section id="section-9">
       <h2 id="name-performance-considerations">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-performance-considerations" class="section-name selfRef">Performance Considerations</a>
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-performance-considerations" class="section-name selfRef">Performance Considerations</a>
       </h2>
-<p id="section-8-1">Proxies SHOULD strive to avoid increasing burstiness of UDP traffic: they
-SHOULD NOT queue packets in order to increase batching.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">When the protocol running over UDP that is being proxied uses congestion
+<p id="section-9-1">Proxies SHOULD strive to avoid increasing burstiness of UDP traffic: they
+SHOULD NOT queue packets in order to increase batching.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">When the protocol running over UDP that is being proxied uses congestion
 control (e.g., <span>[<a href="#QUIC" class="xref">QUIC</a>]</span>), the proxied traffic will incur at least two nested
 congestion controllers. This can reduce performance but the underlying
 HTTP connection MUST NOT disable congestion control unless it has an
 out-of-band way of knowing with absolute certainty that the inner traffic is
-congestion-controlled.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<p id="section-8-3">When the protocol running over UDP that is being proxied uses loss recovery
+congestion-controlled.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<p id="section-9-3">When the protocol running over UDP that is being proxied uses loss recovery
 (e.g., <span>[<a href="#QUIC" class="xref">QUIC</a>]</span>), and the underlying HTTP connection runs over TCP, the proxied
 traffic will incur at least two nested loss recovery mechanisms. This can
 reduce performance as both can sometimes independently retransmit the same
-data. To avoid this, HTTP/3 datagrams SHOULD be used.<a href="#section-8-3" class="pilcrow">¶</a></p>
+data. To avoid this, HTTP/3 datagrams SHOULD be used.<a href="#section-9-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security">
-<section id="section-9">
+<section id="section-10">
       <h2 id="name-security-considerations">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-9-1">There are significant risks in allowing arbitrary clients to establish a
+<p id="section-10-1">There are significant risks in allowing arbitrary clients to establish a
 tunnel to arbitrary servers, as that could allow bad actors to send traffic
 and have it attributed to the proxy. Proxies that support CONNECT-UDP SHOULD
-restrict its use to authenticated users.<a href="#section-9-1" class="pilcrow">¶</a></p>
-<p id="section-9-2">Because the CONNECT method creates a TCP connection to the target, the target
+restrict its use to authenticated users.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2">Because the CONNECT method creates a TCP connection to the target, the target
 has to indicate its willingness to accept TCP connections by responding with
 a TCP SYN-ACK before the proxy can send it application data. UDP doesn't have
 this property, so a CONNECT-UDP proxy could send more data to an unwilling
 target than a CONNECT proxy. However, in practice denial of service attacks
 target open TCP ports so the TCP SYN-ACK does not offer much protection in
 real scenarios. Proxies MUST NOT introspect the contents of UDP payloads as
-that would lead to ossification of UDP-based protocols by proxies.<a href="#section-9-2" class="pilcrow">¶</a></p>
+that would lead to ossification of UDP-based protocols by proxies.<a href="#section-10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana">
-<section id="section-10">
+<section id="section-11">
       <h2 id="name-iana-considerations">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <div id="iana-method">
-<section id="section-10.1">
+<section id="section-11.1">
         <h3 id="name-http-method">
-<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-http-method" class="section-name selfRef">HTTP Method</a>
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-http-method" class="section-name selfRef">HTTP Method</a>
         </h3>
-<p id="section-10.1-1">This document will request IANA to register "CONNECT-UDP" in the
+<p id="section-11.1-1">This document will request IANA to register "CONNECT-UDP" in the
 HTTP Method Registry (IETF review) maintained at
-&lt;<span><a href="https://www.iana.org/assignments/http-methods">https://www.iana.org/assignments/http-methods</a></span>&gt;.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-10.1-2">
+&lt;<span><a href="https://www.iana.org/assignments/http-methods">https://www.iana.org/assignments/http-methods</a></span>&gt;.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-11.1-2">
 <pre>
   +-------------+------+------------+---------------+
   | Method Name | Safe | Idempotent |   Reference   |
   +-------------+------+------------+---------------+
   | CONNECT-UDP |  no  |     no     | This document |
   +-------------+------+------------+---------------+
-</pre><a href="#section-10.1-2" class="pilcrow">¶</a>
+</pre><a href="#section-11.1-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="iana-scheme">
-<section id="section-10.2">
+<section id="section-11.2">
         <h3 id="name-uri-scheme-registration">
-<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-uri-scheme-registration" class="section-name selfRef">URI Scheme Registration</a>
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-uri-scheme-registration" class="section-name selfRef">URI Scheme Registration</a>
         </h3>
-<p id="section-10.2-1">This document will request IANA to register the URI scheme "masque".<a href="#section-10.2-1" class="pilcrow">¶</a></p>
-<p id="section-10.2-2">The syntax definition below uses Augmented Backus-Naur Form (ABNF)
+<p id="section-11.2-1">This document will request IANA to register the URI scheme "masque".<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-2">The syntax definition below uses Augmented Backus-Naur Form (ABNF)
 <span>[<a href="#RFC5234" class="xref">RFC5234</a>]</span>.  The definitions of "host" and "port" are adopted from
-<span>[<a href="#RFC3986" class="xref">RFC3986</a>]</span>.  The syntax of a MASQUE URI is:<a href="#section-10.2-2" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-10.2-3">
+<span>[<a href="#RFC3986" class="xref">RFC3986</a>]</span>.  The syntax of a MASQUE URI is:<a href="#section-11.2-2" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-11.2-3">
 <pre>
 masque-URI = "masque:" "//" host ":" port "/"
-</pre><a href="#section-10.2-3" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-3" class="pilcrow">¶</a>
 </div>
-<p id="section-10.2-4">The "host" and "port" component MUST NOT be empty, and the "port" component
-MUST NOT be 0.<a href="#section-10.2-4" class="pilcrow">¶</a></p>
+<p id="section-11.2-4">The "host" and "port" component MUST NOT be empty, and the "port" component
+MUST NOT be 0.<a href="#section-11.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-chunk-type">
-<section id="section-10.3">
+<section id="section-11.3">
         <h3 id="name-stream-chunk-type-registrat">
-<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-stream-chunk-type-registrat" class="section-name selfRef">Stream Chunk Type Registration</a>
+<a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-stream-chunk-type-registrat" class="section-name selfRef">Stream Chunk Type Registration</a>
         </h3>
-<p id="section-10.3-1">This document will request IANA to create a "CONNECT-UDP Stream Chunk Type"
+<p id="section-11.3-1">This document will request IANA to create a "CONNECT-UDP Stream Chunk Type"
 registry. This registry governs a 62-bit space, and follows the registration
 policy for QUIC registries as defined in <span>[<a href="#QUIC" class="xref">QUIC</a>]</span>. In addition to the fields
 required by the QUIC policy, registrations in this registry MUST include the
-following fields:<a href="#section-10.3-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-10.3-2">
-          <dt id="section-10.3-2.1">
+following fields:<a href="#section-11.3-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-11.3-2">
+          <dt id="section-11.3-2.1">
 Type:  </dt>
-          <dd style="margin-left: 1.5em" id="section-10.3-2.2">
-            <p id="section-10.3-2.2.1">A short mnemonic for the type.<a href="#section-10.3-2.2.1" class="pilcrow">¶</a></p>
+          <dd style="margin-left: 1.5em" id="section-11.3-2.2">
+            <p id="section-11.3-2.2.1">A short mnemonic for the type.<a href="#section-11.3-2.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-10.3-2.3">
+<dt id="section-11.3-2.3">
 Description:  </dt>
-          <dd style="margin-left: 1.5em" id="section-10.3-2.4">
-            <p id="section-10.3-2.4.1">A brief description of the type semantics, which MAY be a summary if a
-specification reference is provided.<a href="#section-10.3-2.4.1" class="pilcrow">¶</a></p>
+          <dd style="margin-left: 1.5em" id="section-11.3-2.4">
+            <p id="section-11.3-2.4.1">A brief description of the type semantics, which MAY be a summary if a
+specification reference is provided.<a href="#section-11.3-2.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-10.3-3">The initial contents of this registry are:<a href="#section-10.3-3" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-10.3-4">
+<p id="section-11.3-3">The initial contents of this registry are:<a href="#section-11.3-3" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-11.3-4">
 <pre>
   +-------+------------+-----------------------+---------------+
   | Value |    Type    |      Description      |   Reference   |
   +-------+------------+-----------------------+---------------+
   | 0x00  | UDP_PACKET | Payload of UDP packet | This document |
   +-------+------------+-----------------------+---------------+
-</pre><a href="#section-10.3-4" class="pilcrow">¶</a>
+</pre><a href="#section-11.3-4" class="pilcrow">¶</a>
 </div>
-<p id="section-10.3-5">Each value of the format <code>37 * N + 23</code> for integer values of N (that is, 23,
+<p id="section-11.3-5">Each value of the format <code>37 * N + 23</code> for integer values of N (that is, 23,
 60, 97, ...) are reserved; these values MUST NOT be assigned by IANA and MUST
-NOT appear in the listing of assigned values.<a href="#section-10.3-5" class="pilcrow">¶</a></p>
+NOT appear in the listing of assigned values.<a href="#section-11.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
-<section id="section-11">
+<section id="section-12">
       <h2 id="name-normative-references">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
 <dt id="DGRAM">[DGRAM]</dt>
@@ -1353,7 +1383,7 @@ NOT appear in the listing of assigned values.<a href="#section-10.3-5" class="pi
 <dd class="break"></dd>
 <dt id="H3DGRAM">[H3DGRAM]</dt>
       <dd>
-<span class="refAuthor">Schinazi, D.</span>, <span class="refTitle">"Using QUIC Datagrams with HTTP/3"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-schinazi-masque-h3-datagram-01</span>, <time datetime="2020-12-12" class="refDate">12 December 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-schinazi-masque-h3-datagram-01.txt">http://www.ietf.org/internet-drafts/draft-schinazi-masque-h3-datagram-01.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Schinazi, D.</span><span class="refAuthor"> and L. Pardue</span>, <span class="refTitle">"Using QUIC Datagrams with HTTP/3"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-schinazi-masque-h3-datagram-02</span>, <time datetime="2020-12-14" class="refDate">14 December 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-schinazi-masque-h3-datagram-02.txt">http://www.ietf.org/internet-drafts/draft-schinazi-masque-h3-datagram-02.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="QUIC">[QUIC]</dt>
       <dd>
@@ -1402,10 +1432,11 @@ NOT appear in the listing of assigned values.<a href="#section-10.3-5" class="pi
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="section-appendix.a-1">This proposal was inspired directly or indirectly by prior work from many
-people. The author would like to thank Eric Rescorla for suggesting to
-use an HTTP method to proxy UDP. Thanks to Lucas Pardue for their inputs on
-this document.<a href="#section-appendix.a-1" class="pilcrow">¶</a></p>
+<p id="section-appendix.a-1">This document is a product of the MASQUE Working Group, and the author thanks
+all MASQUE enthusiasts for their contibutions. This proposal was inspired
+directly or indirectly by prior work from many people. In particular, the
+author would like to thank Eric Rescorla for suggesting to use an HTTP method
+to proxy UDP. Thanks to Lucas Pardue for their inputs on this document.<a href="#section-appendix.a-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
