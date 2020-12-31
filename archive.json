@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-20T00:59:47.047935+00:00",
+  "timestamp": "2020-12-31T01:11:06.974615+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -377,7 +377,7 @@
       "labels": [],
       "body": "Issue created by me on [2020-08-13](https://github.com/DavidSchinazi/masque-drafts/issues/29):\r\n\r\n[connect-udp-00 s3](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-3) mainly copied most of the CONNECT-UDP design from CONNECT, but than goes against some existing HTTP semantics. In particular, every HTTP method is supposed to use URIs to represent their request target (this was mentioned in [RFC 7231 s2](https://tools.ietf.org/html/rfc7231#section-2) and clarified in [draft-ietf-httpbis-semantics s6.1](https://tools.ietf.org/html/draft-ietf-httpbis-semantics-10#section-6.1)). CONNECT and OPTIONS are noted as existing exceptions, but new methods are not allowed exceptions, to allow intermediaries to proxy unknown methods. CONNECT-UDP only cares about the authority (host and port) portion of the URI, so we can easily encode that as an URI and mandate that the path MUST be \"/\" and the query MUST be empty. The main open question is what scheme to use. We could either reuse https, or register a new one.",
       "createdAt": "2020-08-28T04:16:15Z",
-      "updatedAt": "2020-12-15T14:39:00Z",
+      "updatedAt": "2020-12-30T16:57:14Z",
       "closedAt": null,
       "comments": [
         {
@@ -442,6 +442,13 @@
           "body": "Re-opening, as this was not confirmed on the list.",
           "createdAt": "2020-12-15T14:38:59Z",
           "updatedAt": "2020-12-15T14:38:59Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@chris-wood Do we still need this issue now that we have #23? We definitely need one issue to keep the discussion open but having two makes things confusing.",
+          "createdAt": "2020-12-30T16:57:14Z",
+          "updatedAt": "2020-12-30T16:57:14Z"
         }
       ]
     },
@@ -994,7 +1001,7 @@
       "labels": [],
       "body": "[RFC 7540](https://tools.ietf.org/html/rfc7540#section-8.3) requires that CONNECT requests omit the `:scheme` pseudo-header:\r\n\r\n>   The \":scheme\" and \":path\" pseudo-header fields MUST be omitted.\r\n\r\nWhy does this draft need to define a URI scheme and then include that in `:scheme`?\r\n\r\nThere are already two different definitions for `udp:` URI scheme.  Both seem - at least on face value - fairly sensible, but they both come with considerable baggage.\r\n\r\nThe question I'd like to ask is whether this protocol even needs a URI scheme at all.  My first inclination is very much that it does not.",
       "createdAt": "2020-12-14T00:34:36Z",
-      "updatedAt": "2020-12-15T16:22:11Z",
+      "updatedAt": "2020-12-30T17:39:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -1052,6 +1059,27 @@
           "body": "For your obfuscation goals, the client needs to initiate any feature detection and do so after or in parallel with authentication.  So you're right, probably that precludes a setting unless you're using client certs to authenticate (which would itself be visible on a probe, though not clear evidence of Masque).  Then I agree with @mnot, that your path of least resistance is to mint a scheme for a UDP connection.\r\n\r\nThe fact that `udp://` has been used to describe other services available over UDP is regrettable, since those services actually intended to convey certain protocol endpoints.  In this instance, you are literally describing a UDP connection with no protocol-specific properties; I'd consider asking @dthaler if he'd be willing to have the provisional registration (which [he did as an experiment](https://datatracker.ietf.org/meeting/88/materials/slides-88-appsawg-9/)) replaced by a permanent one that simply designates `udp://` as describing a UDP endpoint without conveying application-layer protocol expectations.",
           "createdAt": "2020-12-15T16:22:11Z",
           "updatedAt": "2020-12-15T16:22:11Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thinking about this some more, could we use the \"https\" scheme? I really like @mnot's [idea](https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/23#issuecomment-744853126) to use a URI for proxy configuration, as that could allow future extensibility. [Chrome already uses URIs for proxy config](https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md#https-proxy-scheme) and the \"https\" scheme there already maps TCP to the CONNECT method. I think it would make sense to have that also map UDP to CONNECT-UDP. And with that mindset, having the scheme sent over the wire as \"https\" seems natural, and bypasses the need to define a new URI scheme. Thoughts?",
+          "createdAt": "2020-12-30T17:02:31Z",
+          "updatedAt": "2020-12-30T17:02:31Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "NONE",
+          "body": "Can you explain a bit more please David? I'm vaguely familiar with Chrome's URI format of proxy configuration. \r\n\r\nI note that the link you provide also defines THR \"quic\" scheme. And I presume that it would be nice to ditch that some something more consistent. IIRC it is possible for a proxy identified by \"http\" or \"https\" schemes to offer H3 as an Alt-Svc. And then it's upon the client to decide how to tunnel requests through such a proxy that might be capable of talking CONNECT and CONNECT-UDP. \r\n\r\nIf this is too far off tangent (because of discovery) , we don't need to explore it here.\r\n\r\n ",
+          "createdAt": "2020-12-30T17:21:49Z",
+          "updatedAt": "2020-12-30T17:21:49Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@LPardue I totally agree with you, Chrome's \"quic\" scheme is historical and I think it should now be deprecated in favor of \"https\" (and rely on Alt-Svc to use h3). But yes this is somewhat of a tangent that we may want to discuss offline. I was simply trying to make the case that there was some sort of precedent to consider proxying using CONNECT as \"https\".\r\n\r\nBack to the scheme discussion, since the scheme carries no useful information on CONNECT-UDP requests, I'm proposing to simply use \"https\".",
+          "createdAt": "2020-12-30T17:39:58Z",
+          "updatedAt": "2020-12-30T17:39:58Z"
         }
       ]
     },
@@ -1060,15 +1088,15 @@
       "id": "MDU6SXNzdWU3NjU3NjgxMjY=",
       "title": "CONNECT-UDP Stream Chunk extensibility",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/24",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "https://tools.ietf.org/html/draft-ietf-masque-connect-udp-01#section-5 defines Stream Chunk and follows up with a statement about extensibility\r\n\r\n```\r\nCONNECT-UDP Stream Chunk {\r\n     CONNECT-UDP Stream Chunk Type (i) = 0x00,\r\n     UDP Payload Length (i),\r\n     UDP Payload (..),\r\n   }\r\n\r\n<snip/>\r\n\r\n   The bidirectional stream that the CONNECT-UDP request was sent on is\r\n   a sequence of CONNECT-UDP Stream Chunks.  The CONNECT-UDP Stream\r\n   Chunk Type is designed to allow future extensibility.  Endpoints that\r\n   receive a chunk with an unknown CONNECT-UDP Stream Chunk Type MUST\r\n   silently skip over that chunk.\r\n```\r\n\r\nIt isn't clear to me if the `UDP Payload Length` field belongs solely to type `0x00` or if its expected to be the chunk length and applicable to all Chunk Types that are known or unknown. If the chunk length in *not*common to all chunks, I don't see how an endpoint can silently skip unknown chunks.\r\n",
       "createdAt": "2020-12-14T01:42:55Z",
-      "updatedAt": "2020-12-14T01:56:30Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-30T17:10:30Z",
+      "closedAt": "2020-12-30T17:10:30Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -1076,6 +1104,13 @@
           "body": "You're absolutely right, that text is not very well written. What I meant to say is that the type and length are generic and the value depends on the type - and if the type is 0x00 then the value is a UDP payload. I'll fix the text.",
           "createdAt": "2020-12-14T01:56:30Z",
           "updatedAt": "2020-12-14T01:56:30Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I fixed the text in [draft-ietf-masque-connect-udp-02](https://tools.ietf.org/html/draft-ietf-masque-connect-udp-02), closing.",
+          "createdAt": "2020-12-30T17:10:30Z",
+          "updatedAt": "2020-12-30T17:10:30Z"
         }
       ]
     },
