@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-31T01:11:06.974615+00:00",
+  "timestamp": "2021-01-05T01:12:47.069405+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -370,15 +370,15 @@
       "id": "MDU6SXNzdWU2ODc2OTg4Mjg=",
       "title": "CONNECT-UDP needs a request target URI",
       "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/8",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "DavidSchinazi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Issue created by me on [2020-08-13](https://github.com/DavidSchinazi/masque-drafts/issues/29):\r\n\r\n[connect-udp-00 s3](https://tools.ietf.org/html/draft-schinazi-masque-connect-udp-00#section-3) mainly copied most of the CONNECT-UDP design from CONNECT, but than goes against some existing HTTP semantics. In particular, every HTTP method is supposed to use URIs to represent their request target (this was mentioned in [RFC 7231 s2](https://tools.ietf.org/html/rfc7231#section-2) and clarified in [draft-ietf-httpbis-semantics s6.1](https://tools.ietf.org/html/draft-ietf-httpbis-semantics-10#section-6.1)). CONNECT and OPTIONS are noted as existing exceptions, but new methods are not allowed exceptions, to allow intermediaries to proxy unknown methods. CONNECT-UDP only cares about the authority (host and port) portion of the URI, so we can easily encode that as an URI and mandate that the path MUST be \"/\" and the query MUST be empty. The main open question is what scheme to use. We could either reuse https, or register a new one.",
       "createdAt": "2020-08-28T04:16:15Z",
-      "updatedAt": "2020-12-30T16:57:14Z",
-      "closedAt": null,
+      "updatedAt": "2021-01-04T16:17:23Z",
+      "closedAt": "2021-01-04T16:17:23Z",
       "comments": [
         {
           "author": "DavidSchinazi",
@@ -449,6 +449,13 @@
           "body": "@chris-wood Do we still need this issue now that we have #23? We definitely need one issue to keep the discussion open but having two makes things confusing.",
           "createdAt": "2020-12-30T16:57:14Z",
           "updatedAt": "2020-12-30T16:57:14Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "NONE",
+          "body": "Oh, likely not! I didn't realize #23 was also discussing this issue. Let's consolidate discussion over there.",
+          "createdAt": "2021-01-04T16:17:23Z",
+          "updatedAt": "2021-01-04T16:17:23Z"
         }
       ]
     },
@@ -1001,7 +1008,7 @@
       "labels": [],
       "body": "[RFC 7540](https://tools.ietf.org/html/rfc7540#section-8.3) requires that CONNECT requests omit the `:scheme` pseudo-header:\r\n\r\n>   The \":scheme\" and \":path\" pseudo-header fields MUST be omitted.\r\n\r\nWhy does this draft need to define a URI scheme and then include that in `:scheme`?\r\n\r\nThere are already two different definitions for `udp:` URI scheme.  Both seem - at least on face value - fairly sensible, but they both come with considerable baggage.\r\n\r\nThe question I'd like to ask is whether this protocol even needs a URI scheme at all.  My first inclination is very much that it does not.",
       "createdAt": "2020-12-14T00:34:36Z",
-      "updatedAt": "2020-12-30T17:39:58Z",
+      "updatedAt": "2021-01-04T00:53:26Z",
       "closedAt": null,
       "comments": [
         {
@@ -1080,6 +1087,13 @@
           "body": "@LPardue I totally agree with you, Chrome's \"quic\" scheme is historical and I think it should now be deprecated in favor of \"https\" (and rely on Alt-Svc to use h3). But yes this is somewhat of a tangent that we may want to discuss offline. I was simply trying to make the case that there was some sort of precedent to consider proxying using CONNECT as \"https\".\r\n\r\nBack to the scheme discussion, since the scheme carries no useful information on CONNECT-UDP requests, I'm proposing to simply use \"https\".",
           "createdAt": "2020-12-30T17:39:58Z",
           "updatedAt": "2020-12-30T17:39:58Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "NONE",
+          "body": "That all works for me.  It doesn't adhere to any sort of architectural purity, but CONNECT has no hope of achieving that; hoping to include some notion of purity along other design constraints would only make things worse.\r\n\r\nI like the idea that you can just use \"https\" and work out the rest using the protocol negotiation tools we have (Alt-Svc, HTTPS, settings).",
+          "createdAt": "2021-01-04T00:53:26Z",
+          "updatedAt": "2021-01-04T00:53:26Z"
         }
       ]
     },
