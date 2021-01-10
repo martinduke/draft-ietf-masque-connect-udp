@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-01-05T01:12:47.069405+00:00",
+  "timestamp": "2021-01-10T01:21:47.347288+00:00",
   "repo": "ietf-wg-masque/draft-ietf-masque-connect-udp",
   "labels": [
     {
@@ -1196,6 +1196,32 @@
           "body": "Sounds great, can you send a PR?",
           "createdAt": "2020-12-17T18:19:48Z",
           "updatedAt": "2020-12-17T18:19:48Z"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "MDU6SXNzdWU3ODExODc3Nzk=",
+      "title": "multiplexing flows",
+      "url": "https://github.com/ietf-wg-masque/draft-ietf-masque-connect-udp/issues/27",
+      "state": "OPEN",
+      "author": "marten-seemann",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "extension"
+      ],
+      "body": "QUIC allows a client to use a single UDP port to establish connections to an arbitrary number of servers. Packets are demultiplexed to their respective connections by their connection ID.\r\n\r\nIt would be nice if MASQUE allowed the proxy to do the same thing. To do so, the client could indicate that packets sent on flow M can be multiplexed on the same socket that flow N uses. The proxy would then be allowed to send all UDP packets it receives from the target on flow N.\r\n\r\nIs that something this document should specify, or would this better be moved to an extension?",
+      "createdAt": "2021-01-07T10:00:38Z",
+      "updatedAt": "2021-01-07T10:11:14Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My personal preference would be to move this to an extension, since it's not required for CONNECT-UDP to work.",
+          "createdAt": "2021-01-07T10:11:08Z",
+          "updatedAt": "2021-01-07T10:11:08Z"
         }
       ]
     }
